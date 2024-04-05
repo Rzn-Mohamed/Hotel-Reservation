@@ -30,3 +30,7 @@ class Manager(Personne):
 class Client(Personne):
     is_client = models.BooleanField(default = True)
     pass
+
+class Employee(Personne):
+    is_employee = models.BooleanField(default = True)
+    pass
