@@ -34,3 +34,18 @@ class Client(Personne):
 class Employee(Personne):
     is_employee = models.BooleanField(default = True)
     pass
+
+
+
+
+#-----------------Room-----------------
+
+class RoomType(models.Model):
+    type = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10 , decimal_places=2)
+    
+    
+#-----------------Reservations-----------------
+
+class Reservation():
+    pass
