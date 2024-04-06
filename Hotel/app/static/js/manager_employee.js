@@ -1,24 +1,25 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Pagination logic
-    var pageLinks = document.querySelectorAll('.pagination .page-link');
-    pageLinks.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            var page = this.textContent.trim(); // Get the page number
-            // Reload the page with query parameter 'page'
-            var url = updateQueryStringParameter(window.location.href, 'page', page);
-            window.location.href = url;
-        });
-    });
+document.addEventListener("DOMContentLoaded", function() {
+    var modal = document.getElementById('exampleModalCenter');
+    var btn = document.getElementById("openModalBtn");
+    var span = document.querySelector(".modal-header .close");
 
-    // Function to update query string parameter
-    function updateQueryStringParameter(uri, key, value) {
-        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-        if (uri.match(re)) {
-            return uri.replace(re, '$1' + key + "=" + value + '$2');
-        } else {
-            return uri + separator + key + "=" + value;
+    btn.onclick = function() {
+        modal.classList.add('show');
+        modal.style.display = "block";
+        document.body.classList.add('modal-open');
+    }
+
+    span.onclick = function() {
+        modal.classList.remove('show');
+        modal.style.display = "none";
+        document.body.classList.remove('modal-open');
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.classList.remove('show');
+            modal.style.display = "none";
+            document.body.classList.remove('modal-open');
         }
     }
 });

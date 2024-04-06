@@ -3,13 +3,10 @@
 {% block title %}Employee{% endblock %}
 
 {% block style %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'css/manager_employee.css' %}">
-
 {% endblock %}
 
 {% block content %}
-
 <div class="container mt-3">
     <div class="row">
         {% for e in page_obj %}
@@ -51,18 +48,35 @@
         {% endfor %}
     </div>
 </div>
-<div>
-    
-  
-   
-    <div class="container">
-        <div class="row">
-          <div class="col">
-            <button type="button" class="btn btn-primary">Ajouter</button>
-          </div>
-          <div class="col">
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal body content -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary"  id="openModalBtn" data-toggle="modal" data-target="#exampleModalCenter">Ajouter</button>
+        </div>
+        <div class="col">
             <nav aria-label="...">
-                <ul class="pagination ">
+                <ul class="pagination">
                     {% if page_obj.has_previous %}
                         <li class="page-item">
                             <a class="page-link" href="?page=1">First</a>
@@ -71,7 +85,6 @@
                             <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
                         </li>
                     {% endif %}
-                    
                     {% for num in page_obj.paginator.page_range %}
                         {% if page_obj.number == num %}
                             <li class="page-item active" aria-current="page">
@@ -83,7 +96,6 @@
                             </li>
                         {% endif %}
                     {% endfor %}
-                    
                     {% if page_obj.has_next %}
                         <li class="page-item">
                             <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
@@ -94,8 +106,38 @@
                     {% endif %}
                 </ul>
             </nav>
-        
-          </div>
         </div>
-  <script src="{% static 'js/manager_employee.js' %}"></script>
+    </div>
+</div>
+
+{% block script %}
+<script src="{% static "../static/js/manager_employee.js" %}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var modal = document.getElementById('exampleModalCenter');
+        var btn = document.getElementById("openModalBtn");
+        var span = document.querySelector(".modal-header .close");
+
+        btn.onclick = function() {
+            modal.classList.add('show');
+            modal.style.display = "block";
+            document.body.classList.add('modal-open');
+        }
+
+        span.onclick = function() {
+            modal.classList.remove('show');
+            modal.style.display = "none";
+            document.body.classList.remove('modal-open');
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.classList.remove('show');
+                modal.style.display = "none";
+                document.body.classList.remove('modal-open');
+            }
+        }
+    });
+</script>
+{% endblock %}
 {% endblock %}
