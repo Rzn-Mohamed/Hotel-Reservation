@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User , auth 
 from .models import Manager , Client , Employee , Reservation ,  Room
-
+from django.core.paginator import Paginator
 # Create your views here.
 #-----------------manager----------------#
 def manager_login(request):
@@ -17,8 +17,6 @@ def manager_dash(request):
     return render(request , 'app/manager/manager_dash.html')
 
 
-def manager_employee(request):
-    return render(request , 'app/manager/manager_employee.html')
 
 
 #-----------------client----------------#
@@ -53,4 +51,15 @@ def client_signup(request):
 #----------reservations---------
 def reservations(request):
     reservations = Reservation.getAllReservations()
+   
     return render(request, 'app/manager/manager_res.html', {'reservations': reservations})
+
+
+#---------Employee----------------
+
+def manager_employee(request):
+    employees = Employee.objects.all()  # Assuming you have a model named Employee
+    paginator = Paginator(employees, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'app/manager/manager_employee.html', {'page_obj': page_obj})

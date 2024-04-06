@@ -36,8 +36,8 @@ class Employee(Personne):
     is_employee = models.BooleanField(default = True)
     @classmethod
     def getAllEmployees(cls):
-        return cls.objects.filter(is_employee = True)
-    pass
+        return cls.objects.all()
+    
 
 
 
