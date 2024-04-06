@@ -8,4 +8,5 @@ urlpatterns = [
   path('clientlog/', views.manager_dash, name='client-login'),
   path('clientdash/', views.manager_dash, name='client-dash'),
   path("clientsignup/", views.client_signup, name="client-signup"),
+  path("reservations/", views.reservations, name="manager-res"),
 ]

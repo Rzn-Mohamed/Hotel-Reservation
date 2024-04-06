@@ -1,6 +1,7 @@
 from django.shortcuts import render , redirect
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User , auth
+from django.contrib.auth.models import User , auth 
+from .models import Manager , Client , Employee , Reservation ,  Room
 
 # Create your views here.
 #-----------------manager----------------#
@@ -48,3 +49,8 @@ def client_signup(request):
         return redirect('client-login')
 
     return render(request, 'app/client/client_login.html')
+
+#----------reservations---------
+def reservations(request):
+    reservations = Reservation.getAllReservations()
+    return render(request, 'app/manager/manager_res.html', {'reservations': reservations})
