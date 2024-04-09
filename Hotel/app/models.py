@@ -54,6 +54,7 @@ class Room(models.Model):
     type = models.CharField(max_length=50, choices=TYPES)
     description = models.TextField()
     is_reserved = models.BooleanField(default=False)
+    # night_price = models.IntegerField()
     
     @classmethod
     def createRoom(cls, num, type, description):
@@ -88,37 +89,44 @@ class Room(models.Model):
     
 #-----------------Reservations-----------------
 
+
 class Reservation(models.Model):
-    client = models.ForeignKey(Client , on_delete = models.CASCADE)
-    room  = models.ForeignKey(Room , on_delete = models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    rooms = models.ManyToManyField(Room)  # Change to ManyToManyField
     checkIn = models.DateField()
     checkOut = models.DateField()
-    totalPrice = models.DecimalField(max_digits = 10 , decimal_places = 2)
-    
-    STATUS =[
-        ('pending' , 'Pending'),
-        ('accepted' , 'Accepted'),
-        ('rejected' , 'Rejected'),
+    totalPrice = models.DecimalField(max_digits=10, decimal_places=2)
+
+    STATUS = [
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
     ]
-    status = models.CharField(max_length = 50 , choices = STATUS)
-    
+    status = models.CharField(max_length=50, choices=STATUS)
+
     @classmethod
     def getAllReservations(cls):
         return cls.objects.all()
-    
+
     @classmethod
-    def createReservation(cls , client , room , checkIn , checkOut):
-        room_price = room.getPrice(room) 
-        duree = checkOut - checkIn
-        totalPrice = room_price * duree.days
-        
-        reservation = cls.objects.create(client = client , room = room , checkIn = checkIn , checkOut = checkOut , totalPrice = totalPrice , status = 'pending')
+    def createReservation(cls, client, rooms, checkIn, checkOut):  # Modify to accept multiple rooms
+        total_price = 0
+        for room in rooms:
+            room_price = room.getPrice(room)
+            duration = (checkOut - checkIn).days
+            total_price += room_price * duration
+
+        reservation = cls.objects.create(client=client, checkIn=checkIn, checkOut=checkOut,
+                                        totalPrice=total_price, status='pending')
+        reservation.rooms.add(*rooms)  # Add all rooms to the reservation
         return reservation
     
-    @classmethod
-    def updateStatus(cls , reservation_id , status):
-        return cls.objects.filter(id = reservation_id).update(status = status)
+        
     
     @classmethod
-    def deleteReservation(cls , reservation_id):
-        return cls.objects.filter(id = reservation_id).delete()
+    def updateStatus(cls, reservation_id, status):
+        return cls.objects.filter(id=reservation_id).update(status=status)
+
+    @classmethod
+    def deleteReservation(cls, reservation_id):
+        return cls.objects.filter(id=reservation_id).delete()

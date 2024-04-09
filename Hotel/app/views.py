@@ -3,7 +3,9 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User , auth 
 from .models import Manager , Client , Employee , Reservation ,  Room
 from django.core.paginator import Paginator
+
 # Create your views here.
+
 #-----------------manager----------------#
 def manager_login(request):
     if request.method != 'POST':
@@ -63,3 +65,11 @@ def manager_employee(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'app/manager/manager_employee.html', {'page_obj': page_obj})
+
+#--------------facture----------------
+
+def facture(request , reservation_id):
+    reservation = Reservation.objects.get(id = reservation_id)
+    return render(request , 'app/manager/facture.html' , {'reservation':reservation})
+
+
