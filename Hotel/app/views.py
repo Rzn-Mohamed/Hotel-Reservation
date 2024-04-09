@@ -1,7 +1,7 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect,get_object_or_404
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User , auth 
-from .models import Manager , Client , Employee , Reservation ,  Room
+from .models import Manager , Client , Employee , Reservation ,  Room,Personne
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -60,12 +60,16 @@ def reservations(request):
 #---------Employee----------------
 
 def manager_employee(request):
-    employees = Employee.objects.all()  # Assuming you have a model named Employee
+    employees = Employee.objects.all()  
     paginator = Paginator(employees, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'app/manager/manager_employee.html', {'page_obj': page_obj})
 
+
+def delete_employee(request,id_employee):
+    Employee.deleteEmployee(id_employee)
+    return redirect('manager-employee')
 #--------------facture----------------
 
 def facture(request , reservation_id):
