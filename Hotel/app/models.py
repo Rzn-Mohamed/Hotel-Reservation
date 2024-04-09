@@ -54,6 +54,8 @@ class Room(models.Model):
     type = models.CharField(max_length=50, choices=TYPES)
     description = models.TextField()
     is_reserved = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='room_images/', blank=True, null=True)
+    price = models.IntegerField(default=0)
     # night_price = models.IntegerField()
     
     @classmethod
@@ -77,12 +79,7 @@ class Room(models.Model):
         return cls.objects.filter(num=num).update(is_reserved=state)
     
     def getPrice(self):
-        if self.type == 'single':
-            return 100
-        elif self.type == 'queen':
-            return 200
-        elif self.type == 'king':
-            return 300
+        return self.price
 
     
     
