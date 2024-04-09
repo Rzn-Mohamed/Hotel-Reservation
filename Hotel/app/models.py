@@ -38,6 +38,9 @@ class Employee(Personne):
     def getAllEmployees(cls):
         return cls.objects.all()
     
+    @classmethod
+    def deleteEmployee(cls, Employee_id):
+        return cls.objects.filter(id=Employee_id).delete()
 
 
 
