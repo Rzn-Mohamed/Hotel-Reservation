@@ -15,7 +15,7 @@
             <div class="card p-3 m-2">
                 <div class="d-flex align-items-center">
                     <div class="image ml-4">
-                        <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" class="rounded" width="155">
+                        <img src="../images/{{ e.pic }}" class="rounded" width="155">
                     </div>
                     <div class="ml-3 w-100">
                         <h4 class="mb-0 mt-0 ml-2 text-xl font-bold text-indigo-900">{{ e.fullname }}</h4>
@@ -62,33 +62,44 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Employee</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form class="max-w-md mx-auto"  method="POST" enctype="multipart/form-data">
+                <form class="max-w-md mx-auto" action="{% url 'manager-addemployee' %}" method="POST" enctype="multipart/form-data">
 
 
 
                     {% csrf_token %}
                   <div class="grid md:grid-cols-2 md:gap-6">
-                    <div class="relative z-0 w-full mb-5 group">     
-                        <input type="text" name="titleDestination" id="titleDestination" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="titleDestination" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Titre</label>
-                    </div>
-                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="text" name="descriptionDestination" id="descriptionDestination" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="descriptionDestination" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">description</label>
-                    </div>
+                    <div class="mb-5">
+                        <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 text-black">fullname</label>
+                        <input type="text" id="fullname" name="fullname" class="bg-gray-300 border border-gray-900 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200  dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="fullname" required />
+                      </div>
+                      <div class="mb-5">
+                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 text-black">address</label>
+                        <input type="text" id="address" name="address" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200  dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="your address" required />
+
+                      </div>
               
                   </div>
                  
+                  <div class="grid md:grid-cols-2 md:gap-6">
+
+                    <div class="mb-5">
+                        <label for="phone_num" class="block mb-2 text-sm font-medium text-gray-900 text-black">phone number</label>
+                        <input type="text" id="phone_num" name="phone_num" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200  dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="your address" required />
+    
+                      </div>
                   <div class="mb-4">
-                      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload file</label>
-                      <input class="block w-full px-4 py-2 text-sm text-gray-900 placeholder-white-400 border border-gray-100 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400" name="imageDescription" id="imageDescription" type="file">
+                    <label for="imageEmployee" class="block mb-2 text-sm font-medium text-gray-900 text-black">image</label>
+                      <input class="block w-full px-4 py-2 text-sm text-gray-900 placeholder-white-400 border border-gray-100 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400" name="imageEmployee" id="imageEmployee" type="file">
                   </div>
+
+                  
+                </div>
 
                
             </div>
@@ -103,8 +114,11 @@
 
 <div class="container fixed bottom-4">
     <div class="row">
+        {% comment %} <div class="col">
+            <button onclick="Add()" type="button" class="btn btn-primary fixed bottom-4"  id="openModalBtn" data-toggle="modal" data-target="#exampleModalCenter">Ajouter</button>
+        </div> {% endcomment %}
         <div class="col">
-            <button type="button" class="btn btn-primary fixed bottom-4"  id="openModalBtn" data-toggle="modal" data-target="#exampleModalCenter">Ajouter</button>
+            <button onclick="add()" type="button" class="btn btn-primary fixed bottom-4"  id="openModalBtn" data-toggle="modal" data-target="#exampleModalCenter">Ajouter</button>
         </div>
         <div class="col">
             <nav aria-label="...">
@@ -142,7 +156,52 @@
     </div>
 </div>
 
+{% block script %}
+<script src="{% static "../static/js/manager_employee.js" %}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var modal = document.getElementById('exampleModalCenter');
+        var btn = document.getElementById("openModalBtn");
+        var span = document.querySelector(".modal-header .close");
 
-<script src="{% static 'js/manager_employee.js' %}"></script>
+        btn.onclick = function() {
+          
+            modal.classList.add('show');
+            modal.style.display = "block";
+            document.body.classList.add('modal-open');
+            {% comment %} document.body.style.opacity = "0.5"; {% endcomment %}
 
+            Swal.fire({
+                title: "Add Employee",
+                text: "This is where you can add an employee.",
+                icon: "info"
+            });
+        }
+
+        span.onclick = function() {
+            modal.classList.remove('show');
+            modal.style.display = "none";
+            document.body.classList.remove('modal-open');
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.classList.remove('show');
+                modal.style.display = "none";
+                document.body.classList.remove('modal-open');
+            }
+        }
+
+        function add() {
+            Swal.fire({
+                title: "Add Employee",
+                text: "This is where you can add an employee.",
+                icon: "info"
+            });
+        }
+    });
+
+    
+</script>
+{% endblock %}
 {% endblock %}

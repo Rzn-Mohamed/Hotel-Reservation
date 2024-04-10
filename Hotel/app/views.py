@@ -70,6 +70,27 @@ def manager_employee(request):
 def delete_employee(request,id_employee):
     Employee.deleteEmployee(id_employee)
     return redirect('manager-employee')
+
+
+
+def Add_employee(request):
+        if request.method == 'POST':
+            name = request.POST.get('fullname')
+            address = request.POST.get('address')
+            phone_num = request.POST.get('phone_num')
+
+        if request.FILES:
+            image = request.FILES["imageEmployee"]
+
+            employee=Employee(fullname=name,address=address,
+            pic=image,phone_num=phone_num )
+            employee.save()
+            
+            return redirect("manager-employee")  # Add return statement here
+
+        return HttpResponse("Invalid request") 
+
+
 #--------------facture----------------
 
 def facture(request , reservation_id):
