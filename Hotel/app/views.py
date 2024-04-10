@@ -124,3 +124,7 @@ def addroom(request):
         
         return redirect('manager-room')
     return render(request, 'app/manager/addroom.html')
+
+
+def roomdetails(request):
+    return render(request, 'app/manager/roomdetails.html')

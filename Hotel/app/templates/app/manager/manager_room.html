@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center">
                     <div class="image ml-4">
                     {% if room.image %}
-                        <img src="{{ room.image.url }}" width=300>
+                        <img src="{{ room.image.url }}" width=300 >
                     {% endif %}
                     </div>
                     <div class="ml-3 w-100">
@@ -42,9 +42,8 @@
                         </div>
                         <div class="mt-2 d-flex flex-row align-items-center">
                             
-                            {% comment %} <a href={% url 'deleteemployee' e.id %} > {% endcomment %}
-                                <button class="bg-red hover:bg-blue-500 text-blue-700 font-semibold hover:text-blue py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                                    Details</button>
+                             <a href="{% url 'roomdetails' %}"><button class="bg-red hover:bg-blue-500 text-blue-700 font-semibold hover:text-blue py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                                    Details</button></a>
                             </a>
                         </div>
                         
