@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User , auth 
 from .models import Manager , Client , Employee , Reservation ,  Room,Personne
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 
 # Create your views here.
 
