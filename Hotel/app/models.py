@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser , User
 from datetime import timedelta
+from django.http import HttpResponse
+from django.shortcuts import redirect
 
 class Personne(models.Model):
     user = models.OneToOneField(User , null = True , on_delete = models.CASCADE)
@@ -42,7 +44,7 @@ class Employee(Personne):
     def deleteEmployee(cls, Employee_id):
         return cls.objects.filter(id=Employee_id).delete()
 
-
+    
 
 
 #-----------------Room-----------------
