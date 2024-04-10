@@ -11,4 +11,7 @@ urlpatterns = [
   path("clientsignup/", views.client_signup, name="client-signup"),
   path("reservations/", views.reservations, name="manager-res"),
   path("facture/<int:reservation_id>/", views.facture, name="facture"),
+  path('room/', views.manager_room, name='manager-room'),
+  path('addroom/', views.addroom, name='addroom'),
+
 ]

@@ -77,3 +77,28 @@ def facture(request , reservation_id):
     return render(request , 'app/manager/facture.html' , {'reservation':reservation})
 
 
+#------------ROOM-----------
+def manager_room(request):
+    room = Room.objects.all()  
+    paginator = Paginator(room, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'app/manager/manager_room.html', {'page_obj': page_obj})
+
+
+
+def addroom(request):
+    if request.method == 'POST':
+        num = request.POST['num'] 
+        description = request.POST['description']
+        type = request.POST['type']
+        price = request.POST['price']
+        
+        image = request.FILES.get('image')
+        
+        room = Room(num=num, description=description, type=type, price=price, image=image)
+        
+        room.save()
+        
+        return redirect('manager-room')
+    return render(request, 'app/manager/addroom.html')

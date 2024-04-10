@@ -48,15 +48,15 @@ class Employee(Personne):
 #-----------------Room-----------------
 
 class Room(models.Model):
-    TYPES = [
+    TYPES = [ 
         ('single', 'Single'),
-        ('queen', 'Queen'),
+        ('queen', 'Queen'), 
         ('king', 'King')
     ]
     num = models.IntegerField()
     type = models.CharField(max_length=50, choices=TYPES)
     description = models.TextField()
-    is_reserved = models.BooleanField(default=False)
+    is_reserved = models.CharField(default=False, max_length=50)
     image = models.ImageField(upload_to='room_images/', blank=True, null=True)
     price = models.IntegerField(default=0)
     # night_price = models.IntegerField()
