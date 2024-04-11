@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User , auth 
 from .models import Manager , Client , Employee , Reservation ,  Room,Personne
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse , JsonResponse
 
 # Create your views here.
 
@@ -132,3 +132,8 @@ def roomdetails(request, room_id):
     room = get_object_or_404(Room, id=room_id)
 
     return render(request, 'app/manager/roomdetails.html', {'room': room})
+
+def delete_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, pk=reservation_id)
+    reservation.delete()
+    return JsonResponse({'message': 'Reservation deleted successfully'})
