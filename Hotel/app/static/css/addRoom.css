@@ -6,8 +6,9 @@
   font-family: "Poppins", sans-serif;
 }
 
-section.container {
-    padding-top: 7%;
+section.container {  
+  padding-top: 7%;
+
 }
 .container {
   position: relative;
@@ -159,3 +160,8 @@ section.container {
   .custum-file-upload input {
     display: none;
   }
+
+
+/* .info{
+  display: flex;
+} */
