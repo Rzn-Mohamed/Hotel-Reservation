@@ -137,3 +137,13 @@ def delete_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, pk=reservation_id)
     reservation.delete()
     return JsonResponse({'message': 'Reservation deleted successfully'})
+
+def edit_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, pk=reservation_id)
+    if request.method == 'POST':
+        reservation.status = request.POST['status']
+        reservation.checkIn = request.POST['check-in']
+        reservation.checkOut = request.POST['check-out']
+        reservation.save()
+        return redirect('manager-res')
+    return render(request, 'app/manager/edit_reservation.html', {'reservation': reservation})

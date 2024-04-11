@@ -13,6 +13,7 @@ urlpatterns = [
   path("reservations/", views.reservations, name="manager-res"),
   path("facture/<int:reservation_id>/", views.facture, name="facture"),
   path('delete-reservation/<int:reservation_id>/', views.delete_reservation, name='delete_reservation'),
+  path('edit-reservation/<int:reservation_id>/', views.edit_reservation, name='edit-reservation'),
   path('room/', views.manager_room, name='manager-room'),
   path('addroom/', views.addroom, name='addroom'),
   path("roomdetails/<int:room_id>/", views.roomdetails, name="roomdetails"),
