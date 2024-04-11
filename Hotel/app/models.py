@@ -98,6 +98,7 @@ class Reservation(models.Model):
     checkIn = models.DateField()
     checkOut = models.DateField()
     totalPrice = models.DecimalField(max_digits=10, decimal_places=2)
+    duration = models.DurationField(default=timedelta(days=0))
 
     STATUS = [
         ('pending', 'Pending'),
@@ -111,15 +112,13 @@ class Reservation(models.Model):
         return cls.objects.all()
 
     @classmethod
-    def createReservation(cls, client, rooms, checkIn, checkOut):  # Modify to accept multiple rooms
+    def createReservation(cls, client, rooms, checkIn, checkOut , duration):
         total_price = 0
+        duration = (checkOut - checkIn).days
         for room in rooms:
-            room_price = room.getPrice(room)
-            duration = (checkOut - checkIn).days
-            total_price += room_price * duration
-
-        reservation = cls.objects.create(client=client, checkIn=checkIn, checkOut=checkOut,
-                                        totalPrice=total_price, status='pending')
+            room_price = room.getPrice()
+            total_price += room_price
+        reservation = cls.objects.create(client=client, checkIn=checkIn, checkOut=checkOut, duration=duration, totalPrice=total_price, status='pending')
         reservation.rooms.add(*rooms)  # Add all rooms to the reservation
         return reservation
     

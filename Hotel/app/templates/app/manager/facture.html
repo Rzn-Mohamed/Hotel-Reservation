@@ -4,127 +4,159 @@
 
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/facture.css' %}">
+<script src="https://cdn.tailwindcss.com"></script>
+
 {% endblock %}
 
 {% block content %}
 <body>
-    <div class="invoice-box">
-        <table cellpadding="0" cellspacing="0">
-            <tr class="top">
-                <td colspan="2">
-                    <table>
-                        <tr>
-                            <td class="title">
-                                <img
-                                    src="https://sparksuite.github.io/simple-html-invoice-template/images/logo.png"
-                                    style="width: 100%; max-width: 300px"
-                                />
-                            </td>
+    <br><br>
+    <button id="downloadButton" class="cursor-pointer group relative flex gap-1.5 px-8 py-4 bg-black bg-opacity-80 text-[#f1f1f1] rounded-3xl hover:bg-opacity-70 transition font-semibold shadow-md">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24px" width="24px">
+            <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+            <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+            <g id="SVGRepo_iconCarrier"> 
+                <g id="Interface / Download"> 
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#f1f1f1" d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12" id="Vector"></path> 
+                </g> 
+            </g>
+        </svg>
+        Download
+        <div class="absolute opacity-0 -bottom-full rounded-md py-2 px-2 bg-black bg-opacity-70 left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg">
+            Download
+        </div>
+    </button>
+        
+    <div class="max-w-3xl mx-auto p-6 bg-white rounded shadow-sm my-6" id="invoice">
 
-                            <td>
-                                Invoice #: {{ reservation.id }}<br />
-                                Created: <span id="createdDate"></span><br />
-                                Due: <span id="dueDate"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
+    <div class="grid grid-cols-2 items-center">
+        <div>
+        <!--  Company logo  -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="company-logo" height="100" width="100">
+        </div>
+
+        <div class="text-right">
+        <p>
+            HotelX
+        </p>
+        <p class="text-gray-500 text-sm">
+            projet@gmail.com
+        </p>
+        <p class="text-gray-500 text-sm mt-1">
+            +41-442341232
+        </p>
+        <p class="text-gray-500 text-sm mt-1">
+            VAT: 8657671212
+        </p>
+        </div>
+    </div>
+
+    <!-- Client info -->
+    <div class="grid grid-cols-2 items-center mt-8">
+        <div>
+        <p class="font-bold text-gray-800">
+            Bill to :
+        </p>
+        <p class="text-gray-500">
+            {{ reservation.client.fullname }}
+            <br />
+            {{ reservation.client.address }}
+        </p>
+        <p class="text-gray-500">
+            {{ reservation.client.phone_num }}
+        </p>
+        <p class="text-gray-500">
+            {{ reservation.client.user.email }}
+        </p>
+        </div>
+
+        <div class="text-right">
+        <p class="">
+            Invoice number:
+            <span class="text-gray-500">{{ reservation.id }}</span>
+        </p>
+        <p>
+            Invoice date: <span id="invoice-date" class="text-gray-500"></span>
+            <br />
+            Due date: <span id="due-date" class="text-gray-500"></span>
+        </p>
+        
+        </div>
+    </div>
+
+  <!-- Invoice Items -->
+    <div class="-mx-4 mt-8 flow-root sm:mx-0">
+        <table class="min-w-full">
+        <colgroup>
+            <col class="w-full sm:w-1/2">
+            <col class="sm:w-1/6">
+            <col class="sm:w-1/6">
+            <col class="sm:w-1/6">
+        </colgroup>
+        <thead class="border-b border-gray-300 text-gray-900">
+            <tr>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Chambre</th>
+            <th scope="col" class="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell">Prix</th>
+            <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Total</th>
             </tr>
-
-            <tr class="information">
-                <td colspan="2">
-                    <table>
-                        <tr>
-                            <td>
-                                Sparksuite, Inc.<br />
-                                12345 Sunny Road<br />
-                                Sunnyville, CA 12345
-                            </td>
-
-                            <td>
-                                {{ reservation.client.fullname }}<br />
-                                {{ reservation.client.address }} |
-                                {{ reservation.client.phone_num }}<br />
-                                {{ reservation.client.user.email }}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
-            <tr class="heading">
-                <td>Payment Method</td>
-
-                <td>Check #</td>
-            </tr>
-
-            <tr class="details">
-                <td>Check</td>
-
-                <td>1000</td>
-            </tr>
-
-            <tr class="heading">
-                <td>Item</td>
-
-                <td>Price</td>
-            </tr>
-
-            
+        </thead>
+        <tbody>
+            <!-- Loop through invoice items -->
             {% for room in reservation.rooms.all %}
-            <tr class="item">
-                <td>Chambre : {{ room.type }}</td> 
-                <td>{{ room.getPrice }}Dh</td> 
+            <tr class="border-b border-gray-200">
+                <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
+                    <div class="font-medium text-gray-900">{{ room.type }}</div>
+                </td>
+                <td class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">{{ room.getPrice }}Dh</td>
+                
+                <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">{{ room.getPrice }}Dh</td>
             </tr>
             {% endfor %}
-
-            <tr class="total">
-                <td></td>
-                <td>Total: {{ reservation.totalPrice }} Dh</td>
+        </tbody>
+        <tfoot>
+            <tr>
+            <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
+            <th scope="row" class="pl-6 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Subtotal</th>
+            <td class="pl-3 pr-6 pt-6 text-right text-sm text-gray-500 sm:pr-0">{{reservation.totalPrice}}</td>
             </tr>
+            <tr>
+            <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Tax</th>
+            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Tax</th>
+            <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">0dh</td>
+            </tr>
+            <tr>
+            <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Discount</th>
+            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Discount</th>
+            <td class="pl-3 pr-6 pt-4 text-right text-sm text-gray-500 sm:pr-0">-0%</td>
+            </tr>
+            <tr>
+            <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0">Total</th>
+            <th scope="row" class="pl-6 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th>
+            <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">{{reservation.totalPrice}}</td>
+            </tr>
+        </tfoot>
         </table>
     </div>
 
+    <!--  Footer  -->
+    <div class="border-t-2 pt-4 text-xs text-gray-500 text-center mt-16">
+        Please pay the invoice before the due date. You can pay the invoice by logging in to your account from our client portal.
+    </div>
+
+    </div>
+
+<!-- <button type="button" id="btn" class="">Print</button> -->
+
     <!-- Download Invoice button -->
-	<button id="downloadButton">Download Invoice</button>
+	
 
-{% endblock %}
 
-{% block script %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
 <script src="{% static 'js/facture.js' %}"></script>
-
-
-<script>
-    // Function to generate PDF
-    function generatePDF() {
-        // Select the element containing the invoice details
-        const element = document.querySelector(".invoice-box");
-
-        // Options for PDF generation
-        const options = {
-            margin: 10,
-            filename: 'invoice.pdf',
-            image: { type: 'jpeg', quality: 1 }, // Maximum quality JPEG images
-            html2canvas: { scale: 3 }, // Increase scale for better quality
-            
-        };
-
-        // Generate PDF from HTML element
-        html2pdf()
-            .set(options)
-            .from(element)
-            .save();
-    }
-
-    // Wait for content to load before generating PDF
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("downloadButton").addEventListener("click", generatePDF);
-    });
-</script>
-
 
 {% endblock %}

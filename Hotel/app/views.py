@@ -96,6 +96,7 @@ def Add_employee(request):
 
 def facture(request , reservation_id):
     reservation = Reservation.objects.get(id = reservation_id)
+    
     return render(request , 'app/manager/facture.html' , {'reservation':reservation})
 
 
