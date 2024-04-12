@@ -45,6 +45,9 @@ class Employee(Personne):
         return cls.objects.filter(id=Employee_id).delete()
 
     
+    @classmethod
+    def updateEmployee(cls, num, type, description):
+        return cls.objects.filter(num=num).update(type=type, description=description)
 
 
 #-----------------Room-----------------

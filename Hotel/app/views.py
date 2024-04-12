@@ -90,7 +90,21 @@ def Add_employee(request):
             return redirect("manager-employee")  # Add return statement here
 
         return HttpResponse("Invalid request") 
+    
 
+
+def edit_employee(request,employee_id):
+        employee = get_object_or_404(Employee, pk=employee_id)
+        if request.FILES:
+            image = request.FILES["imageEmployee"]
+
+        employee.fullname = request.POST['fullname']
+        employee.address = request.POST['address']
+        employee.phone_num = request.POST['phone_num']
+        employee.pic = image
+        employee.save()
+        return redirect('manager-employee')
+   
 
 #--------------facture----------------
 
