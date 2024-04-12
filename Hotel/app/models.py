@@ -71,8 +71,9 @@ class Room(models.Model):
         return cls.objects.create(num=num, type=type, description=description)
 
     @classmethod
-    def updateRoom(cls, num, type, description):
-        return cls.objects.filter(num=num).update(type=type, description=description)
+    def updateRoom(cls,room_id, num, type, description,price,image):
+        return cls.objects.filter(id=room_id).update(num=num,type=type, description=description,price=price,image=image)
+
 
     @classmethod
     def deleteRoom(cls, num):

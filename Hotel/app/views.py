@@ -148,6 +148,29 @@ def roomdetails(request, room_id):
 
     return render(request, 'app/manager/roomdetails.html', {'room': room})
 
+def editroom(request, room_id):
+    room = get_object_or_404(Room, pk=room_id)
+    if request.method == 'POST':
+        room.num = request.POST['num']
+        room.description = request.POST['description']
+        room.type = request.POST['type']
+        room.price = request.POST['price']
+        
+        image = request.FILES.get('image')
+        if image:
+            room.image = image
+        
+        room.save()
+        return redirect('manager-room')
+    else:
+        return render(request, 'app/manager/editroom.html', {'room': room})
+
+def deleteroom(request, room_id):
+    room = get_object_or_404(Room, pk=room_id)
+    room.delete()
+    return redirect('manager-room')
+
+
 def delete_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, pk=reservation_id)
     reservation.delete()

@@ -1,4 +1,3 @@
-
 {% extends "./manager_index.html" %}
 {% load static %}
 {% block title %}ROOM{% endblock %}
@@ -10,48 +9,46 @@
 {% endblock %}
 
 {% block content %}
-<section class="container">
-    <header>Room Details</header>
+<section class="container mx-auto py-8">
+    <header class="text-2xl font-bold mb-4">Room Details</header>
     <form method="POST" class="form" enctype="multipart/form-data">
         {% csrf_token %}
-      <section class="info">
-        <div class="input-box">
-          <label>Numero Room</label>
-          <p> {{ room.num }}</p>
-        </div>
-        <br>
-        <div class="input-box">
-          <label>Price</label>
-          <p>{{room.price}}</p>
-        </div>
-        <br>
-        <div class="column">
-          <div class="">
-            <label>Type</label>
-              <p>{{room.type}}</p>
-          </div>
-        </div>
-        <div class="column">
-          <div class="input-box">
-            <label>Description</label>
-            <p>{{room.description}}</p>
-          </div>
-        </div>
-        <br>
-        <br>
-        <div class="column">
-          <label> Images </label>
-          {% if room.image %}
-                  <img src="{{ room.image.url }}" alt="Image of {{ room.num }}" width="200">
-              {% endif %}
-              
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold">Room Number</label>
+            <p class="text-gray-800">{{ room.num }}</p>
         </div>
         
-      </section>
-      
-      <button>Edit</button>
-      <button>Delete</button>
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold">Price</label>
+            <p class="text-gray-800">{{ room.price }}</p>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold">Type</label>
+            <p class="text-gray-800">{{ room.type }}</p>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold">Description</label>
+            <p class="text-gray-800">{{ room.description }}</p>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 font-semibold">Image</label>
+            {% if room.image %}
+                <img src="{{ room.image.url }}" alt="Image of {{ room.num }}" width="200" class="rounded shadow-md">
+            {% endif %}
+        </div>
+        
+        <div class="flex justify-center mt-8 space-x-4">
+            <a href="{% url 'editroom' room.id %}">
+                <button type="button" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Edit</button>
+            </a>
+            <a href="{% url 'deleteroom' room.id %}">
+                <button type="button" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Delete</button>
+            </a>
+        </div>
     </form>
-  </section>
-
+</section>
 {% endblock %}
