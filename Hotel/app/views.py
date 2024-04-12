@@ -141,6 +141,7 @@ def addroom(request):
     return render(request, 'app/manager/addroom.html')
 
 
+
 def roomdetails(request, room_id):
     
     room = get_object_or_404(Room, id=room_id)

@@ -32,6 +32,14 @@
           </div>
         </div>
         <div class="column">
+          <div class="input-box">
+            <label>Description</label>
+            <p>{{room.description}}</p>
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="column">
           <label> Images </label>
           {% if room.image %}
                   <img src="{{ room.image.url }}" alt="Image of {{ room.num }}" width="200">
@@ -40,14 +48,7 @@
         </div>
         
       </section>
-      <br>
-     
-      <div class="column">
-        <div class="input-box">
-          <label>Description</label>
-          <p>{{room.description}}</p>
-        </div>
-      </div>
+      
       <button>Edit</button>
       <button>Delete</button>
     </form>
