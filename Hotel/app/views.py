@@ -17,7 +17,16 @@ def manager_login(request):
     return redirect('manager-dash')
 
 def manager_dash(request):
-    return render(request , 'app/manager/manager_dash.html')
+    total_employee=Employee.TotalEmployee()
+    total_room=Room.TotalRoom()
+    total_reservation=Reservation.TotalReservation()
+    
+    context ={
+        'total_employee': total_employee,
+        'total_room': total_room,
+        'total_reservation': total_reservation
+    }
+    return render(request , 'app/manager/manager_dash.html',context)
 
 
 
@@ -65,6 +74,7 @@ def manager_employee(request):
     paginator = Paginator(employees, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
     return render(request, 'app/manager/manager_employee.html', {'page_obj': page_obj})
 
 
@@ -105,6 +115,9 @@ def edit_employee(request,employee_id):
         employee.save()
         return redirect('manager-employee')
    
+   
+
+    
 
 #--------------facture----------------
 

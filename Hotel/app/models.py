@@ -50,6 +50,11 @@ class Employee(Personne):
         return cls.objects.filter(num=num).update(type=type, description=description)
 
 
+    @classmethod
+    def TotalEmployee(cls):
+        return cls.objects.count()
+
+
 #-----------------Room-----------------
 
 class Room(models.Model):
@@ -91,7 +96,9 @@ class Room(models.Model):
         return self.price
 
     
-    
+    @classmethod
+    def TotalRoom(cls):
+        return cls.objects.count()
     
 #-----------------Reservations-----------------
 
@@ -135,3 +142,8 @@ class Reservation(models.Model):
     @classmethod
     def deleteReservation(cls, reservation_id):
         return cls.objects.filter(id=reservation_id).delete()
+    
+    
+    @classmethod
+    def TotalReservation(cls):
+        return cls.objects.count()
