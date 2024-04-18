@@ -1,4 +1,3 @@
-
 {% extends "./manager_index.html" %}
 {% load static %}
 {% block title %}ROOM{% endblock %}
@@ -10,49 +9,47 @@
 {% endblock %}
 
 {% block content %}
-<section class="container">
-    <header>Registration Form</header>
-    <form method="POST" class="form" enctype="multipart/form-data">
-        {% csrf_token %}
-      <div class="input-box">
-        <label>Numero Room</label>
-        <input type="text" placeholder="Enter numero room" name="num" value="{{room.num}}" required />
-      </div>
-      <div class="input-box">
-        <label>Price</label>
-        <input type="text" placeholder="Enter Price" name="price" value="{{room.price}}" required />
-      </div>
-      <div class="column">
-        <div class="select-box">
-            <select name="type">
-                <option hidden>Type</option>
-                <option {% if room.type == 'King' %} selected {% endif %}>King</option>
-                <option {% if room.type == 'Queen' %} selected {% endif %}>Queen</option>
-                <option {% if room.type == 'Single' %} selected {% endif %}>Single</option>
-            </select>
-        </div>
-      </div>
-      <div class="column">
-        <div class="input-box">
-          <label>Description</label>
-          <input type="textarea" placeholder="Enter Description" name="description" value="{{room.description}}" required />
-        </div>
-      </div>
-      <br>
-      <div class="column">
-        <label class="custum-file-upload" for="file">
-            <div class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <path fill="" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" clip-rule="evenodd" fill-rule="evenodd"></path> </g></svg>
+  <section class="bg-white dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+        <h2 class="text-center mb-4 text-xl font-bold text-gray-900 dark:text-black">Add a new room</h2>
+        <form method="POST" class="form" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 sm:gap-6">
+            <div class="sm:col-span-1">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Room Number</label>
+                <input type="text" name="num" id="name" class="w-full p-2.5 border rounded-lg bg-gray-300 border-gray-300 text-sm focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter room number" value="{{room.num}}" required>
             </div>
-            <div class="text">
-               <span>Click to upload image</span>
-               </div>
-               <input type="file" name="image" id="file" accept="image/*" multiple required />
-            </label>
-            
-      </div>
-      <button>Submit</button>
-    </form>
-  </section>
 
+            <div class="sm:col-span-1">
+                <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Price</label>
+                <input type="text" name="price" id="price" class="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-sm focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter price" value="{{room.price}}" required>
+            </div>
+
+            <div class="sm:col-span-1">
+                <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Type</label>
+                <select name="type" id="type" class="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-sm focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                    <option value="" disabled selected>Select Type</option>
+                    <option {% if room.type == 'King' %} selected {% endif %} value="King">King</option>
+                    <option {% if room.type == 'Queen' %} selected {% endif %} value="Queen">Queen</option>
+                    <option {% if room.type == 'Single' %} selected {% endif %} value="Single">Single</option>
+                </select>
+            </div>
+
+            <div class="sm:col-span-1 md:col-span-2 lg:col-span-3">
+                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Description</label>
+                <textarea name="description" id="description" rows="8" class="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Your description here">{{room.description}}</textarea>
+            </div>
+
+            <div class="sm:col-span-1 md:col-span-2 lg:col-span-3">
+                <label for="file" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Image Upload</label>
+                <input type="file" name="image" id="file" accept="image/*" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-primary-500 dark:focus:border-primary-500" multiple required>
+            </div>
+          </div>
+          
+          <button type="submit" class="flex justify-center items-center w-full px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                Add Room
+          </button>
+        </form>
+    </div>
+  </section>
 {% endblock %}

@@ -17,7 +17,16 @@ def manager_login(request):
     return redirect('manager-dash')
 
 def manager_dash(request):
-    return render(request , 'app/manager/manager_dash.html')
+    total_employee=Employee.TotalEmployee()
+    total_room=Room.TotalRoom()
+    total_reservation=Reservation.TotalReservation()
+    
+    context ={
+        'total_employee': total_employee,
+        'total_room': total_room,
+        'total_reservation': total_reservation
+    }
+    return render(request , 'app/manager/manager_dash.html',context)
 
 
 
@@ -65,6 +74,7 @@ def manager_employee(request):
     paginator = Paginator(employees, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
     return render(request, 'app/manager/manager_employee.html', {'page_obj': page_obj})
 
 
@@ -90,7 +100,24 @@ def Add_employee(request):
             return redirect("manager-employee")  # Add return statement here
 
         return HttpResponse("Invalid request") 
+    
 
+
+def edit_employee(request,employee_id):
+        employee = get_object_or_404(Employee, pk=employee_id)
+        if request.FILES:
+            image = request.FILES["imageEmployee"]
+
+        employee.fullname = request.POST['fullname']
+        employee.address = request.POST['address']
+        employee.phone_num = request.POST['phone_num']
+        employee.pic = image
+        employee.save()
+        return redirect('manager-employee')
+   
+   
+
+    
 
 #--------------facture----------------
 
@@ -127,11 +154,35 @@ def addroom(request):
     return render(request, 'app/manager/addroom.html')
 
 
+
 def roomdetails(request, room_id):
     
     room = get_object_or_404(Room, id=room_id)
 
     return render(request, 'app/manager/roomdetails.html', {'room': room})
+
+def editroom(request, room_id):
+    room = get_object_or_404(Room, pk=room_id)
+    if request.method == 'POST':
+        room.num = request.POST['num']
+        room.description = request.POST['description']
+        room.type = request.POST['type']
+        room.price = request.POST['price']
+        
+        image = request.FILES.get('image')
+        if image:
+            room.image = image
+        
+        room.save()
+        return redirect('manager-room')
+    else:
+        return render(request, 'app/manager/editroom.html', {'room': room})
+
+def deleteroom(request, room_id):
+    room = get_object_or_404(Room, pk=room_id)
+    room.delete()
+    return redirect('manager-room')
+
 
 def delete_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, pk=reservation_id)

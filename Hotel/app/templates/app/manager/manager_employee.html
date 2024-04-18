@@ -12,44 +12,70 @@
     <div class="row">
         {% for e in page_obj %}
         <div class="col-md-4"> <!-- Use col-md-4 to make each card occupy 1/3 of the row on medium-sized screens -->
-            <div class="card p-3 m-2">
-                <div class="d-flex align-items-center">
-                    <div class="image ml-4">
+            <div class="bg-white shadow-md rounded-md p-4 m-4">
+                <div class="flex items-center">
+                    <div class="mr-4">
                         <img src="../images/{{ e.pic }}" class="rounded" width="155">
                     </div>
-                    <div class="ml-3 w-100">
-                        <h4 class="mb-0 mt-0 ml-2 text-xl font-bold text-indigo-900">{{ e.fullname }}</h4>
-                        <span class="ml-2 text-gray-600">{{ e.phone_num }}</span>
-                        <div class=" mt-2 d-flex justify-content-between rounded text-white stats">
-                         <div class="d-flex flex-column">
-                                {% comment %} <span class="articles">Articles</span>
-                                <span class="number1">38</span>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <span class="followers">Followers</span>
-                                <span class="number2">980</span>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <span class="rating">Rating</span>
-                                <span class="number3">8.9</span> {% endcomment %}
-                            </div> 
-                           
-                        </div>
-                        <div class="mt-2 d-flex flex-row align-items-center">
-                            <a>
-                                <button class="btn btn-sm bg-yellow-400 hover:bg-yellow-500 w-100 text-white px-6">Update</button>
+                    <div class="w-full">
+                        <h4 class="text-xl font-bold text-indigo-900">{{ e.fullname }}</h4>
+                        <span class="text-gray-600">{{ e.phone_num }}</span>
+                      
+                        <div class="mt-2 flex items-center">
+                            <a href="#">
+                                <button class="bg-blue-400 hover:bg-blue-500 text-white px-6 py-2 rounded" id="openModalBtnEdit" data-toggle="modal2" data-target="#exampleModalCenter2">Update</button>
                             </a>
-                            <a href={% url 'deleteemployee' e.id %} >
-                                <button class="btn btn-sm btn-danger w-100 ml-2  px-6">Delete</button>
+                            <a href="{% url 'deleteemployee' e.id %}">
+                                <button class="bg-red-500 hover:bg-red-600 text-white ml-2 px-6 py-2 rounded">Delete</button>
                             </a>
                         </div>
-                        
-                        
-                        
                     </div>
                 </div>
             </div>
+            
         </div>
+        <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header2 ">
+                        <h5 class="modal-title" id="exampleModalLongTitle2">Edit Employee</h5>
+                        <button type="button" class="close" data-dismiss="modal2" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="max-w-md mx-auto" action="{% url 'manager-Editemployee' e.id %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="grid md:grid-cols-2 md:gap-6">
+                                <div class="mb-5">
+                                    <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 text-black">Fullname</label>
+                                    <input type="text" id="fullname" name="fullname" class="bg-gray-300 border border-gray-900 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200  dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Fullname" required />
+                                </div>
+                                <div class="mb-5">
+                                    <label for="address" class="block mb-2 text-sm font-medium text-gray-900 text-black">Address</label>
+                                    <input type="text" id="address" name="address" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200  dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your address" required />
+                                </div>
+                            </div>
+                            <div class="grid md:grid-cols-2 md:gap-6">
+                                <div class="mb-5">
+                                    <label for="phone_num" class="block mb-2 text-sm font-medium text-gray-900 text-black">Phone number</label>
+                                    <input type="text" id="phone_num" name="phone_num" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200  dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your phone number" required />
+                                </div>
+                                <div class="mb-4">
+                                    <label for="imageEmployee" class="block mb-2 text-sm font-medium text-gray-900 text-black">Image</label>
+                                    <input class="block w-full px-4 py-2 text-sm text-gray-900 placeholder-white-400 border border-gray-100 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400" name="imageEmployee" id="imageEmployee" type="file">
+                                </div>
+                            </div>
+                    
+                    </div>
+                    <div class="modal-footer">
+                             <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        
         {% if forloop.counter|divisibleby:3 and not forloop.last %}
     </div>
     <div class="row"> 
@@ -58,10 +84,11 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header left-4">
                 <h5 class="modal-title" id="exampleModalLongTitle">Add Employee</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -112,13 +139,20 @@
     </div>
 </div>
 
+
+
+
+
+
+
+
 <div class="container fixed bottom-4">
     <div class="row">
         {% comment %} <div class="col">
             <button onclick="Add()" type="button" class="btn btn-primary fixed bottom-4"  id="openModalBtn" data-toggle="modal" data-target="#exampleModalCenter">Ajouter</button>
         </div> {% endcomment %}
         <div class="col">
-            <button onclick="add()" type="button" class="btn btn-primary fixed bottom-4"  id="openModalBtn" data-toggle="modal" data-target="#exampleModalCenter">Ajouter</button>
+            <button onclick="add()" type="button" class="btn btn-primary fixed bottom-4"  id="openModalBtn" data-toggle="modal" data-target="#exampleModalCenter">Add</button>
         </div>
         <div class="col">
             <nav aria-label="...">
@@ -156,13 +190,18 @@
     </div>
 </div>
 
+
+
 {% block script %}
 <script src="{% static "../static/js/manager_employee.js" %}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var modal = document.getElementById('exampleModalCenter');
+        var modal2 = document.getElementById('exampleModalCenter2');
         var btn = document.getElementById("openModalBtn");
+        var btnEdit = document.getElementById("openModalBtnEdit");
         var span = document.querySelector(".modal-header .close");
+        var span2 = document.querySelector(".modal-header2 .close");
 
         btn.onclick = function() {
           
@@ -175,12 +214,29 @@
                 title: "Add Employee",
                 text: "This is where you can add an employee.",
                 icon: "info"
-            });
+           
+         });
+        }
+
+        btnEdit.onclick = function() {
+          
+            modal2.classList.add('show');
+            modal2.style.display = "block";
+            document.body.classList.add('modal-open');
+           
+
+          
         }
 
         span.onclick = function() {
             modal.classList.remove('show');
             modal.style.display = "none";
+            document.body.classList.remove('modal-open');
+        }
+
+        span2.onclick = function() {
+            modal2.classList.remove('show');
+            modal2.style.display = "none";
             document.body.classList.remove('modal-open');
         }
 
@@ -191,6 +247,16 @@
                 document.body.classList.remove('modal-open');
             }
         }
+
+        
+        window.onclick = function(event) {
+            if (event.target == modal2) {
+                modal2.classList.remove('show');
+                modal2.style.display = "none";
+                document.body.classList.remove('modal-open');
+            }
+        }
+
 
         function add() {
             Swal.fire({
