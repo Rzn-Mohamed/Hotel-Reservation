@@ -21,11 +21,59 @@ def manager_dash(request):
     total_room=Room.TotalRoom()
     total_reservation=Reservation.TotalReservation()
     
+   
+    
+    labels=[]
+    data=[]
+    
+    # queryset=Reservation.objects.order_by('checkIn')
+    queryset=Reservation.objects.all()
+    # print(queryset)
+    month1 = month2 = month3 = month4 = month5 = month6 = month7 = month8 = month9 = month10 = month11 = month12 = 0
+    
+
+    for r in queryset:
+        month = r.checkIn.month
+        match month:
+            case 1:
+                month1 += 1
+            case 2:
+                month2 += 1
+            case 3:
+                month3 += 1
+            case 4:
+                month4 += 1
+            case 5:
+                month5 += 1
+            case 6:
+                month6 += 1
+            case 7:
+                month7 += 1
+            case 8:
+                month8 += 1
+            case 9:
+                month9 += 1
+            case 10:
+                month10 += 1
+            case 11:
+                month11 += 1
+            case 12:
+                month12 += 1
+
+    mois=[month1, month2, month3, month4, month5, month6, month7, month8, month9, month10, month11, month12]
+    for i in mois:
+        data.append(i)
+              
+   
+        
     context ={
         'total_employee': total_employee,
         'total_room': total_room,
-        'total_reservation': total_reservation
+        'total_reservation': total_reservation,
+        "labels":labels,
+        "data":data
     }
+        
     return render(request , 'app/manager/manager_dash.html',context)
 
 
