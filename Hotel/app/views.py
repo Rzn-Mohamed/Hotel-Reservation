@@ -270,3 +270,6 @@ def reservation_history(request):
     client = request.user.client
     reservations = Reservation.objects.filter(client=client)
     return render(request, 'app/client/client_res.html', {'reservations': reservations})
+
+def landing(request):
+    return render(request, 'app/client/landingpage.html')

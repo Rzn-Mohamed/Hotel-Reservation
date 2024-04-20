@@ -23,6 +23,7 @@ urlpatterns = [
   path("clientlog/", views.client_login, name="client-login"),
   path("clientdash/", views.client_dash, name="client-dash"),
   path("clientres/", views.reservation_history, name="client-res"),
+  path("",views.landing,name="landingpage"),
   
 
 ]
