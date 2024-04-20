@@ -15,6 +15,7 @@
             <tr>
                 <th scope="col" class="px-4 py-3">Client</th>
                 <th scope="col" class="px-4 py-3">Room Number</th>
+                <th scope="col" class="px-4 py-3">Services</th>
                 <th scope="col" class="px-4 py-3">Check-in</th>
                 <th scope="col" class="px-4 py-3">Check-out</th>
                 <th scope="col" class="px-4 py-3">Status</th>
@@ -31,6 +32,10 @@
                 {% for room in reservation.rooms.all %}
                     {{ room.num }}{% if not forloop.last %} - {% endif %}
                 {% endfor %}</td>
+                <td class="px-4 py-3">
+                    {% for service in reservation.services.all %}
+                        {{ service.name }}{% if not forloop.last %} - {% endif %}
+                    {% endfor %}</td>
                 <td class="px-4 py-3">{{reservation.checkIn}}</td>
                 <td class="px-4 py-3">{{reservation.checkOut}}</td>
                 <td class="px-4 py-3">{{reservation.status}}</td>

@@ -105,9 +105,14 @@ class Room(models.Model):
 #-----------------Reservations-----------------
 
 
+class Service(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
 class Reservation(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    rooms = models.ManyToManyField(Room)  # Change to ManyToManyField
+    rooms = models.ManyToManyField(Room)
+    services = models.ManyToManyField(Service, blank=True)  # Allow services to be optional
     checkIn = models.DateField()
     checkOut = models.DateField()
     totalPrice = models.DecimalField(max_digits=10, decimal_places=2)
@@ -125,18 +130,23 @@ class Reservation(models.Model):
         return cls.objects.all()
 
     @classmethod
-    def createReservation(cls, client, rooms, checkIn, checkOut , duration):
+    def createReservation(cls, client, rooms, checkIn, checkOut, services=None):
         total_price = 0
         duration = (checkOut - checkIn).days
         for room in rooms:
             room_price = room.getPrice()
             total_price += room_price
-        reservation = cls.objects.create(client=client, checkIn=checkIn, checkOut=checkOut, duration=duration, totalPrice=total_price, status='pending')
-        reservation.rooms.add(*rooms)  # Add all rooms to the reservation
-        return reservation
-    
         
-    
+        if services:
+            for service in services:
+                total_price += service.price*duration
+
+        reservation = cls.objects.create(client=client, checkIn=checkIn, checkOut=checkOut, duration=duration, totalPrice=total_price, status='pending')
+        reservation.rooms.add(*rooms)
+        if services:
+            reservation.services.add(*services)
+        return reservation
+
     @classmethod
     def updateStatus(cls, reservation_id, status):
         return cls.objects.filter(id=reservation_id).update(status=status)
@@ -144,8 +154,7 @@ class Reservation(models.Model):
     @classmethod
     def deleteReservation(cls, reservation_id):
         return cls.objects.filter(id=reservation_id).delete()
-    
-    
+
     @classmethod
     def TotalReservation(cls):
         return cls.objects.count()
