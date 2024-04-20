@@ -227,11 +227,14 @@ def edit_reservation(request, reservation_id):
 #-----------------client----------------#
 def client_login(request):
     if request.method != 'POST':
-        return render(request , 'app/client_login.html')
-    user = authenticate(request , username=request.POST['username'] , password=request.POST['password'])
-    if user is not None:
-        auth.login(request , user)
+        return render(request , 'app/client/client_login.html')
+    client = authenticate(request , username=request.POST['username'] , password=request.POST['password'])
+    if client is not None:
+        auth.login(request , client)
     return redirect('client-dash')
+
+from django.contrib.auth.models import User
+from .models import Client
 
 def client_signup(request):
     if request.method == 'POST':
@@ -239,6 +242,9 @@ def client_signup(request):
         email = request.POST['email']
         password = request.POST['password1']  
         password2 = request.POST['password2']
+        fullname = request.POST['fullname']
+        address = request.POST['address']
+        phone_num = request.POST['phone_num']
         
         # Check if passwords match
         if password != password2:
@@ -247,12 +253,20 @@ def client_signup(request):
         # Create the user
         user = User.objects.create_user(username=username, email=email, password=password)
         
-        user.save()
-
+        # Create the client associated with the user
+        client = Client.objects.create(user=user, fullname=fullname, address=address, phone_num=phone_num)
+        
+        
         return redirect('client-login')
 
-    return render(request, 'app/client/client_login.html')
+    return render(request, 'app/client/client_signup.html')
+
 
 
 def client_dash(request):
     return render(request , 'app/client/client_dash.html')
+
+def reservation_history(request):
+    client = request.user.client
+    reservations = Reservation.objects.filter(client=client)
+    return render(request, 'app/client/client_res.html', {'reservations': reservations})

@@ -11,7 +11,17 @@
 {% block content %}
 <div class="container mt-24">
     
-        
+    <h1>Reservation History</h1>
+    <ul>
+        {% for reservation in reservations %}
+            <li>
+                <p>Check-in: {{ reservation.checkIn }}</p>
+                <p>Check-out: {{ reservation.checkOut }}</p>
+                <p>Status: {{ reservation.status }}</p>
+                <!-- Add more details as needed -->
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 
 
