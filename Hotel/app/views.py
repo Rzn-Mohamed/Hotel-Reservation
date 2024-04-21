@@ -26,9 +26,9 @@ def manager_dash(request):
     labels=[]
     data=[]
     
-    # queryset=Reservation.objects.order_by('checkIn')
+   
     queryset=Reservation.objects.all()
-    # print(queryset)
+
     month1 = month2 = month3 = month4 = month5 = month6 = month7 = month8 = month9 = month10 = month11 = month12 = 0
     
 
@@ -65,13 +65,45 @@ def manager_dash(request):
         data.append(i)
               
    
+   
+   
+    reservations = Reservation.objects.all()
+    kingCount = 0
+    singleCount = 0
+    queenCount = 0
+    data2=[]
+    for reservation in reservations:
+          
+          rooms = reservation.rooms.all()
+          for room in rooms:
+            room_type = room.type
+            
+            if room_type == "king":
+                kingCount += 1 
+            elif room_type == "single":
+                singleCount += 1
+            elif room_type == "queen":
+                queenCount += 1
+                
+    print("King Rooms Count:", kingCount)
+    print("Single Rooms Count:", singleCount)
+    print("queen Rooms Count:", queenCount)
+
         
+    type=[kingCount,singleCount,queenCount]
+    for i in type:
+        data2.append(i)
+
+
+    
+    
     context ={
         'total_employee': total_employee,
         'total_room': total_room,
         'total_reservation': total_reservation,
         "labels":labels,
-        "data":data
+        "data":data,
+         "data2":data2
     }
         
     return render(request , 'app/manager/manager_dash.html',context)
