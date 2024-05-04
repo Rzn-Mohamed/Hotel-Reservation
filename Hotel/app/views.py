@@ -8,41 +8,39 @@ from django.http import HttpResponse , JsonResponse
 # Create your views here.
 
 #-----------------manager----------------#
-# def manager_login(request):
-#     if request.method != 'POST':
-#         return render(request , 'app/manager/manager_login.html')
-#     user = authenticate(request , username=request.POST['username'] , password=request.POST['password'])
-#     if user is not None:
-#         auth.login(request , user)
-#     return redirect('manager-dash')
 
-def managerlogin(request):
+
+
+def manager_register(request):
     if request.method == 'POST':
         username = request.POST['username']
-        password = request.POST['password']
-        user=User.objects.filter(username=username).first()
-        manager=Manager.objects.filter(user=user).first()
-        if manager is not None:
-            if user.password == password:
-                return redirect('manager-dash')
+        email = request.POST['email']
+        password = request.POST['password1']
+        password2 = request.POST['password2']
+        if password == password2:
+            if User.objects.filter(username=username).exists():
+                return render(request, 'app/manager/manager_register.html', {'error': 'Username already exists'})
+            elif User.objects.filter(email=email).exists():
+                return render(request, 'app/manager/manager_register.html', {'error': 'Email already exists'})
             else:
-                return render(request, 'app/manager/manager_login.html', {'error': 'Invalid credentials'})
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.save()
+                manager = Manager.objects.create(user=user)
+                manager.save()
+                return redirect('manager-login')
         else:
-            return render(request, 'app/manager/manager_login.html', {'error': 'Invalid credentials'})
+            return render(request, 'app/manager/manager_register.html', {'error': 'Passwords do not match'})
+    return render(request, 'app/manager/manager_register.html')
 
-    return render(request, 'app/manager/manager_login.html')
+def manager_login(request):
+    if request.method != 'POST':
+        return render(request , 'app/manager/manager_login.html')
+    manager = authenticate(request , username=request.POST['username'] , password=request.POST['password'])
+    if manager is not None:
+        auth.login(request , manager)
+    return redirect('manager-dash')
 
-        # user = authenticate(request, username=username, password=password)
-    #     manager=Manager.objects.filter(user.username=username).first()
-    #     if manager is not None:
-    #         if manager.password == password:
-    #             return redirect('manager-dash')
-    #         else:
-    #             return render(request, 'app/manager/manager_login.html', {'error': 'Invalid credentials'})
-    #     else:
-    #         return render(request, 'app/manager/manager_login.html', {'error': 'Invalid credentials'})
 
-    # return render(request, 'app/manager/manager_login.html')
 
 
 def manager_dash(request):
