@@ -32,7 +32,7 @@ class Manager(Personne):
     
 class Client(Personne):
     is_client = models.BooleanField(default = True)
-    
+    is_blacklisted = models.BooleanField(default=False)
     
     
 

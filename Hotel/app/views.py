@@ -254,6 +254,37 @@ def edit_reservation(request, reservation_id):
 
 
 
+from django.shortcuts import render, redirect
+from .models import Client
+
+def clientList(request):
+    clients_list = Client.objects.all()
+
+    # Pagination
+    paginator = Paginator(clients_list, 10)  # Show 10 clients per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if request.method == 'POST':
+        if 'selected_clients' in request.POST:
+            selected_clients = request.POST.getlist('selected_clients')
+            for client_id in selected_clients:
+                client = Client.objects.get(id=client_id)
+                # Toggle blacklist status
+                client.is_blacklisted = not client.is_blacklisted
+                client.save()
+        else:
+            client_id = request.POST.get('client_id')
+            client = Client.objects.get(id=client_id)
+            # Toggle blacklist status for individual client
+            client.is_blacklisted = not client.is_blacklisted
+            client.save()
+        
+        # Redirect to the same page after processing the form
+        return redirect('clientlist')
+
+    return render(request, 'app/manager/manager_clients.html', {'page_obj': page_obj})
+
 
 
 #-----------------client----------------#

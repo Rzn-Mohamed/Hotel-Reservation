@@ -17,7 +17,7 @@ urlpatterns = [
   path("roomdetails/<int:room_id>/", views.roomdetails, name="roomdetails"),
   path("editroom/<int:room_id>/", views.editroom, name="editroom"),
   path("deleteroom/<int:room_id>/", views.deleteroom, name="deleteroom"),
-  
+  path("clientlist/", views.clientList, name="clientlist"),
   #----------------client----------------#
   path("clientsignup/", views.client_signup, name="client-signup"),
   path("clientlog/", views.client_login, name="client-login"),
