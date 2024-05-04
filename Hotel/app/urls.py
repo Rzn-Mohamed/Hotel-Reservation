@@ -20,6 +20,8 @@ urlpatterns = [
   path("deleteroom/<int:room_id>/", views.deleteroom, name="deleteroom"),
   path("clientlist/", views.clientList, name="clientlist"),
   path('managersettings/', views.manager_settings, name='manager-settings'),
+  path('managereditsettings/', views.manager_update, name='manager-editsettings'),
+  
   #----------------client----------------#
   path("clientsignup/", views.client_signup, name="client-signup"),
   path("clientlog/", views.client_login, name="client-login"),

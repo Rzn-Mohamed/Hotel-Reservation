@@ -25,7 +25,7 @@ def manager_register(request):
             else:
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
-                manager = Manager.objects.create(user=user)
+                manager = Manager.get(user=user)
                 manager.save()
                 return redirect('manager-login')
         else:
@@ -136,13 +136,22 @@ def manager_dash(request):
     return render(request , 'app/manager/manager_dash.html',context)
 
 # -------Settings------------
-# def manager_settings(request):
-#     return render(request, 'app/manager/manager_settings.html')
 
 def manager_settings(request):
-    return render(request, 'app/manager/manager_settings.html')
-    
+    manager = Manager.objects.get(user=request.user)
+    return render(request, 'app/manager/manager_settings.html', {'manager': manager})  
 
+def manager_update(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        manager = Manager.objects.get(user=request.user)
+        manager.user.username = username
+        manager.user.email = email
+        manager.user.save()
+        manager.save()
+        return redirect('manager-settings')
+    return render(request, 'app/manager/manager_settings.html')
 
 
 #----------reservations---------

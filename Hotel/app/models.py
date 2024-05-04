@@ -19,8 +19,23 @@ class Personne(models.Model):
         return cls.objects.create(user = user , fullname = fullname , address = address , phone_num = phone_num)
 
     @classmethod
-    def update(cls , user , fullname , address , phone_num):
-        return cls.objects.filter(user = user).update(fullname = fullname , address = address , phone_num = phone_num)
+    def get(cls , user):
+        return cls.objects.create(user = user)
+
+    @classmethod
+    def update(cls, user, fullname=None, address=None, phone_num=None):
+        manager = cls.objects.get(user=user)
+        if fullname is not None:
+            manager.fullname = fullname
+        if address is not None:
+            manager.address = address
+        if phone_num is not None:
+            manager.phone_num = phone_num
+        manager.save()
+        return manager
+
+    # def update(cls , user , fullname , address , phone_num):
+    #     return cls.objects.filter(user = user).update(fullname = fullname , address = address , phone_num = phone_num)
     
     @classmethod
     def delete(cls , user):
@@ -28,7 +43,7 @@ class Personne(models.Model):
 
 class Manager(Personne):
     is_manager = models.BooleanField(default = True)
-    pass
+    
     
 class Client(Personne):
     is_client = models.BooleanField(default = True)
