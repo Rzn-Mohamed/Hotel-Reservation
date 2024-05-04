@@ -8,13 +8,42 @@ from django.http import HttpResponse , JsonResponse
 # Create your views here.
 
 #-----------------manager----------------#
-def manager_login(request):
-    if request.method != 'POST':
-        return render(request , 'app/manager/manager_login.html')
-    user = authenticate(request , username=request.POST['username'] , password=request.POST['password'])
-    if user is not None:
-        auth.login(request , user)
-    return redirect('manager-dash')
+# def manager_login(request):
+#     if request.method != 'POST':
+#         return render(request , 'app/manager/manager_login.html')
+#     user = authenticate(request , username=request.POST['username'] , password=request.POST['password'])
+#     if user is not None:
+#         auth.login(request , user)
+#     return redirect('manager-dash')
+
+def managerlogin(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user=User.objects.filter(username=username).first()
+        manager=Manager.objects.filter(user=user).first()
+        if manager is not None:
+            if user.password == password:
+                return redirect('manager-dash')
+            else:
+                return render(request, 'app/manager/manager_login.html', {'error': 'Invalid credentials'})
+        else:
+            return render(request, 'app/manager/manager_login.html', {'error': 'Invalid credentials'})
+
+    return render(request, 'app/manager/manager_login.html')
+
+        # user = authenticate(request, username=username, password=password)
+    #     manager=Manager.objects.filter(user.username=username).first()
+    #     if manager is not None:
+    #         if manager.password == password:
+    #             return redirect('manager-dash')
+    #         else:
+    #             return render(request, 'app/manager/manager_login.html', {'error': 'Invalid credentials'})
+    #     else:
+    #         return render(request, 'app/manager/manager_login.html', {'error': 'Invalid credentials'})
+
+    # return render(request, 'app/manager/manager_login.html')
+
 
 def manager_dash(request):
     total_employee=Employee.TotalEmployee()
@@ -108,8 +137,13 @@ def manager_dash(request):
         
     return render(request , 'app/manager/manager_dash.html',context)
 
+# -------Settings------------
+# def manager_settings(request):
+#     return render(request, 'app/manager/manager_settings.html')
 
-
+def manager_settings(request):
+    return render(request, 'app/manager/manager_settings.html')
+    
 
 
 
