@@ -140,20 +140,31 @@ def manager_dash(request):
 # -------Settings------------
 
 def manager_settings(request):
-    manager = Manager.objects.get(user=request.user)
+    manager = get_object_or_404(Manager, user=request.user)
     return render(request, 'app/manager/manager_settings.html', {'manager': manager})  
+
 
 def manager_update(request):
     if request.method == 'POST':
+        fullname = request.POST['fullname']
         username = request.POST['username']
         email = request.POST['email']
-        manager = Manager.objects.get(user=request.user)
-        manager.user.username = username
-        manager.user.email = email
-        manager.user.save()
-        manager.save()
+        phone_num = request.POST['phone_num']
+        address = request.POST['address']
+
+        Manager.update(request.user, fullname, username, email, phone_num, address)
         return redirect('manager-settings')
-    return render(request, 'app/manager/manager_settings.html')
+
+    else: 
+        manager = Manager.objects.get(user=request.user)
+        return render(request, 'app/manager/manager_editsettings.html', {'manager': manager})
+    
+def delete_confirmation(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        return redirect('manager-signup')
+    return render(request, 'app/manager/delete_confirmation.html')
 
 
 #----------reservations---------
@@ -383,3 +394,31 @@ def landing(request):
 def client_room(request):
     rooms=Room.getAllRooms()
     return render(request, 'app/client/client_room.html',{'rooms':rooms})
+
+
+def client_settings(request):
+    client = get_object_or_404(Client, user=request.user)
+    return render(request, 'app/client/client_settings.html', {'client': client})
+
+
+def client_update(request):
+    if request.method == 'POST':
+        fullname = request.POST['fullname']
+        username = request.POST['username']
+        email = request.POST['email']
+        phone_num = request.POST['phone_num']
+        address = request.POST['address']
+
+        Client.update(request.user, fullname, username, email, phone_num, address)
+        return redirect('client-settings')
+
+    else: 
+        client = Client.objects.get(user=request.user)
+        return render(request, 'app/client/client_editsettings.html', {'client': client})
+    
+def delete_confirmation(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        return redirect('client-signup')
+    return render(request, 'app/client/client_deleteconfirmation.html')

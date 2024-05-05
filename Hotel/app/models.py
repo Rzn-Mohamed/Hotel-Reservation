@@ -12,6 +12,13 @@ class Personne(models.Model):
     pic = models.ImageField(upload_to = 'profile_pics' , null = True , blank = True)
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return str(self.user)
+    
+    def create_user_personne(sender, instance, created, **kwargs):
+        if created:
+            Personne.objects.create(user=instance)
     
     #nshufo hadshi ash m7tajino wlala
     @classmethod
@@ -23,19 +30,23 @@ class Personne(models.Model):
         return cls.objects.create(user = user)
 
     @classmethod
-    def update(cls, user, fullname=None, address=None, phone_num=None):
-        manager = cls.objects.get(user=user)
+    def update(cls, user, fullname=None, username=None, email=None, phone_num=None, address=None):
+        personne, created = cls.objects.get_or_create(user=user)
         if fullname is not None:
-            manager.fullname = fullname
-        if address is not None:
-            manager.address = address
+            personne.fullname = fullname
+        if username is not None:
+            user.username = username
+        if email is not None:
+            user.email = email  
         if phone_num is not None:
-            manager.phone_num = phone_num
-        manager.save()
-        return manager
+            personne.phone_num = phone_num
+        if address is not None:
+            personne.address = address
 
-    # def update(cls , user , fullname , address , phone_num):
-    #     return cls.objects.filter(user = user).update(fullname = fullname , address = address , phone_num = phone_num)
+        user.save() 
+        personne.save()
+        return personne
+
     
     @classmethod
     def delete(cls , user):

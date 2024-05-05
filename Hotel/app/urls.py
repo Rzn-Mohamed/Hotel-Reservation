@@ -21,6 +21,7 @@ urlpatterns = [
   path("clientlist/", views.clientList, name="clientlist"),
   path('managersettings/', views.manager_settings, name='manager-settings'),
   path('managereditsettings/', views.manager_update, name='manager-editsettings'),
+  path("delete_confirmation/", views.delete_confirmation, name="delete_confirmation"),
   
   #----------------client----------------#
   path("clientsignup/", views.client_signup, name="client-signup"),
@@ -29,6 +30,9 @@ urlpatterns = [
   path("clientres/", views.reservation_history, name="client-res"),
   path("",views.landing,name="landingpage"),
   path("clientroom",views.client_room,name="clientroom"),
+  path('clientsettings/', views.client_settings, name='client-settings'),
+  path('clienteditsettings/', views.client_update, name='client-editsettings'),
+  path('client_deleteconfirmation/', views.delete_confirmation, name='client-deleteconfirmation'),
   
 
 ]

@@ -1,0 +1,53 @@
+
+{% extends "./client_index2.html" %}
+
+
+{% block content  %}
+
+
+
+<div class="mt-4 flex flex-col bg-gray-100 rounded-lg p-4 shadow-sm m-16">
+    <div style="text-align: center;">
+      <h2 class="pl-6 text-2xl font-bold sm:text-3xl">My Profile</h2>
+    </div>
+    <div class="mt-4">
+      <label class="text-black" for="name">your FullName</label>
+      <input placeholder="Your fullname" class="w-full bg-white rounded-md border-gray-300 text-black px-2 py-1" value="{% if client.fullname %}{{ client.fullname }}{% else %}Not Set...{% endif %}" readonly>
+    </div>
+
+    <div class="mt-4">
+      <label class="text-black" for="address">Your Username</label>
+      <input placeholder="Your username" class="w-full bg-white rounded-md border-gray-300 text-black px-2 py-1" id="address" value="{% if client.user.username %}{{ client.user.username }}{% else %}Not Set...{% endif %}" readonly>
+    </div>
+
+    <div class="mt-4">
+      <label class="text-black" for="address">Your email</label>
+      <input placeholder="Your email" class="w-full bg-white rounded-md border-gray-300 text-black px-2 py-1" id="address" value="{% if client.user.email %}{{ client.user.email }}{% else %}Not Set...{% endif %}" readonly>
+    </div>
+
+    <div class="mt-4">
+      <label class="text-black" for="address">Your Phone number</label>
+      <input placeholder="Your phone number" class="w-full bg-white rounded-md border-gray-300 text-black px-2 py-1" id="address" value="{% if client.phone_num %}{{ client.phone_num }}{% else %}Not Set...{% endif %}" readonly>
+    </div>
+
+    <div class="mt-4">
+      <label class="text-black" for="address">Your Address</label>
+      <input placeholder="Your address" class="w-full bg-white rounded-md border-gray-300 text-black px-2 py-1" id="address" value="{% if client.address %}{{ client.address }}{% else %}Not Set...{% endif %}" readonly>
+    </div>
+
+  <div class="mt-4 flex justify-end">
+
+    <a href="{% url 'client-editsettings' %}">
+    <button class="bg-white text-black rounded-md px-4 py-1 hover:bg-gray-200 hover:text-gray-900 mr-2" type="submit">Update</button>
+  </a>
+
+  <a href="{% url 'client-deleteconfirmation' %}">
+    <button class="bg-white text-black rounded-md px-4 py-1 hover:bg-gray-200 hover:text-gray-900">Delete</button>
+  </a>
+  </div>
+</div>
+
+
+
+
+{% endblock   %}
