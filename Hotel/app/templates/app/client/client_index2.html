@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
+    {% block head %}
+        
+      {% endblock %}
 </head>
 <body>
     <header class="text-gray-700 body-font border-b border-gray-200">
@@ -187,5 +191,8 @@
         </div>
       </footer>
       
+      {% block script %}
+        
+      {% endblock %}
 </body>
 </html>

@@ -97,6 +97,7 @@ class Room(models.Model):
     is_reserved = models.CharField(default=False, max_length=50)
     image = models.ImageField(upload_to='room_images/', blank=True, null=True)
     price = models.IntegerField(default=0)
+    Evaluation = models.FloatField(default=0)
     # night_price = models.IntegerField()
     
     @classmethod

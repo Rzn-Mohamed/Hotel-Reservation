@@ -393,6 +393,7 @@ def landing(request):
 
 def client_room(request):
     rooms=Room.getAllRooms()
+
     return render(request, 'app/client/client_room.html',{'rooms':rooms})
 
 
