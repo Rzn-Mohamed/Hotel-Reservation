@@ -100,16 +100,18 @@ def manager_dash(request):
     queenCount = 0
     data2=[]
     for reservation in reservations:
-          
           rooms = reservation.rooms.all()
+          
+        
+          
           for room in rooms:
-            room_type = room.type
-            
-            if room_type == "king":
+            room_type = room.type 
+            print(room_type)
+            if room_type == "King" or room_type == "king":
                 kingCount += 1 
-            elif room_type == "single":
+            elif room_type == "Single" or room_type == "single":
                 singleCount += 1
-            elif room_type == "queen":
+            elif room_type == "queen" or room_type == "Queen":
                 queenCount += 1
                 
     print("King Rooms Count:", kingCount)
@@ -377,3 +379,7 @@ def reservation_history(request):
 
 def landing(request):
     return render(request, 'app/client/landingpage.html')
+
+def client_room(request):
+    rooms=Room.getAllRooms()
+    return render(request, 'app/client/client_room.html',{'rooms':rooms})

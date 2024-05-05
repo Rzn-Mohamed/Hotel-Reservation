@@ -28,6 +28,7 @@ urlpatterns = [
   path("clientdash/", views.client_dash, name="client-dash"),
   path("clientres/", views.reservation_history, name="client-res"),
   path("",views.landing,name="landingpage"),
+  path("clientroom",views.client_room,name="clientroom"),
   
 
 ]
