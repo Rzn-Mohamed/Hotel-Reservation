@@ -1,0 +1,47 @@
+{% extends "./client_index2.html" %}
+
+{% block head %}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="max-w-4xl mx-auto px-4 bg-white shadow-lg mt-8">
+    <h1 class="text-2xl font-bold mb-4">Reservation Form</h1>
+    <form id="reservationForm" action="clientAddreservationForm" method="POST">
+      {% csrf_token %}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="checkin" class="block">Check-in</label>
+          <input type="date" name="checkin" id="checkin" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" />
+        </div>
+        <div>
+          <label for="checkout" class="block">Check-out</label>
+          <input type="date" name="checkout" id="checkout" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" />
+        </div>
+        <div class="md:col-span-2">
+          <label for="room_price" class="block">Room price</label>
+          <input type="text" name="room_price" id="room_price" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={{price}} disabled/>
+        </div>
+
+        <div class="grid grid-cols-4 gap-4">
+          
+          {% for s in services %}
+          <div>
+           <p>{{s.name}} </p>
+           <input type="checkbox" name="service" id="service" class="border mt-1 rounded px-2 w-full bg-gray-50" value={{s.name}}/>
+        </div>
+          
+           {% endfor %}
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary bg-blue">Submit</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="../../static/js/client_room.js"></script>
+{% endblock %}

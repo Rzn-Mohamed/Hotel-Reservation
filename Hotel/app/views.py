@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect,get_object_or_404
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User , auth 
-from .models import Manager , Client , Employee , Reservation ,  Room,Personne
+from .models import Manager , Client , Employee , Reservation ,  Room,Personne,Service
 from django.core.paginator import Paginator
 from django.http import HttpResponse , JsonResponse
 
@@ -348,7 +348,7 @@ def client_login(request):
     client = authenticate(request , username=request.POST['username'] , password=request.POST['password'])
     if client is not None:
         auth.login(request , client)
-    return redirect('client-dash')
+    return redirect('landingpage')
 
 from django.contrib.auth.models import User
 from .models import Client
@@ -393,8 +393,13 @@ def landing(request):
 
 def client_room(request):
     rooms=Room.getAllRooms()
-
-    return render(request, 'app/client/client_room.html',{'rooms':rooms})
+    services=Service.getAllservices()
+    service=[]
+    for i in services:
+      service.append(i.name)
+    
+   
+    return render(request, 'app/client/client_room.html',{'rooms':rooms,'services':service})
 
 
 def client_settings(request):
@@ -423,3 +428,23 @@ def delete_confirmation(request):
         user.delete()
         return redirect('client-signup')
     return render(request, 'app/client/client_deleteconfirmation.html')
+
+
+def client_reservation(request):
+    rooms=Room.getAllRooms()
+    services=Service.getAllservices()
+    price=request.GET.get('price') 
+   
+    return render(request,'app/client/client_addreservation.html',{'rooms':rooms,'services':services,'price':price})
+
+
+
+def clientAddreservationForm(request): 
+    if request.method=='POST':
+        user=request.user
+        room=request.GET.get('room') 
+        checkin=request.POST['checkin']
+        checkout=request.POST['checkout']
+        service=request.POST['service']
+        Reservation.createReservation(user,room,checkin,checkout,service)
+        return redirect('clientroom')

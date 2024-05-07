@@ -135,6 +135,11 @@ class Room(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    @classmethod
+    def getAllservices(cls):
+        return cls.objects.all()
+    
 
 class Reservation(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
