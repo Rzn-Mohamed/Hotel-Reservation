@@ -164,7 +164,7 @@ class Reservation(models.Model):
     @classmethod
     def createReservation(cls, client, rooms, checkIn, checkOut, services=None):
         total_price = 0
-        duration = (checkOut - checkIn).days
+        duration = (checkOut - checkIn)
         for room in rooms:
             room_price = room.getPrice()
             total_price += room_price

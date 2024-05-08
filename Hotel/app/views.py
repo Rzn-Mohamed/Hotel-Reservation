@@ -4,7 +4,7 @@ from django.contrib.auth.models import User , auth
 from .models import Manager , Client , Employee , Reservation ,  Room,Personne,Service
 from django.core.paginator import Paginator
 from django.http import HttpResponse , JsonResponse
-
+from datetime import datetime
 # Create your views here.
 
 #-----------------manager----------------#
@@ -439,12 +439,15 @@ def client_reservation(request):
 
 
 
-def clientAddreservationForm(request): 
+def clientAddreservationForm(request,price, room): 
     if request.method=='POST':
         user=request.user
         room=request.GET.get('room') 
-        checkin=request.POST['checkin']
-        checkout=request.POST['checkout']
+        checkin = datetime.strptime(request.POST['checkin'], '%Y-%m-%d').date()
+        checkout = datetime.strptime(request.POST['checkout'], '%Y-%m-%d').date()
         service=request.POST['service']
+        
+        print(room)
+      
         Reservation.createReservation(user,room,checkin,checkout,service)
         return redirect('clientroom')
