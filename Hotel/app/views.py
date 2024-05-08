@@ -430,24 +430,27 @@ def delete_confirmation(request):
     return render(request, 'app/client/client_deleteconfirmation.html')
 
 
-def client_reservation(request):
+def client_reservation(request,room_id):
     rooms=Room.getAllRooms()
-    services=Service.getAllservices()
-    price=request.GET.get('price') 
+    services=Service.getAllservices() 
+    room = get_object_or_404(Room, id=room_id)
+    
+    
+    
    
-    return render(request,'app/client/client_addreservation.html',{'rooms':rooms,'services':services,'price':price})
+   
+    return render(request,'app/client/client_addreservation.html',{'rooms':rooms,'services':services,'room':room})
 
 
 
-def clientAddreservationForm(request,price, room): 
+def clientAddreservationForm(request,room_id): 
     if request.method=='POST':
-        user=request.user
-        room=request.GET.get('room') 
+        userr=request.user
+        room = get_object_or_404(Room,id=room_id)
         checkin = datetime.strptime(request.POST['checkin'], '%Y-%m-%d').date()
         checkout = datetime.strptime(request.POST['checkout'], '%Y-%m-%d').date()
         service=request.POST['service']
         
-        print(room)
-      
-        Reservation.createReservation(user,room,checkin,checkout,service)
+        print(userr)
+        Reservation.createReservation(userr,room,checkin,checkout,service) 
         return redirect('clientroom')

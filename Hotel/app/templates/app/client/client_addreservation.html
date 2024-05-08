@@ -7,7 +7,7 @@
 {% block content %}
   <div class="max-w-4xl mx-auto px-4 bg-white shadow-lg mt-8">
     <h1 class="text-2xl font-bold mb-4">Reservation Form</h1>
-    <form id="reservationForm" action="clientAddreservationForm" method="POST">
+    <form id="reservationForm" action="clientAddreservationForm/{{room.id}}" method="POST">
       {% csrf_token %}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -20,7 +20,7 @@
         </div>
         <div class="md:col-span-2">
           <label for="room_price" class="block">Room price</label>
-          <input type="text" name="room_price" id="room_price" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={{price}} disabled/>
+          <input type="text" name="room_price" id="room_price" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={{room.price}} disabled/>
         </div>
 
         <div class="grid grid-cols-4 gap-4">

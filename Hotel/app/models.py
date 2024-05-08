@@ -3,7 +3,8 @@ from django.contrib.auth.models import AbstractUser , User
 from datetime import timedelta
 from django.http import HttpResponse
 from django.shortcuts import redirect
-
+from django.shortcuts import render , redirect,get_object_or_404
+from decimal import Decimal
 class Personne(models.Model):
     user = models.OneToOneField(User , null = True , on_delete = models.CASCADE)
     fullname = models.CharField(null = True , max_length = 255)
@@ -134,7 +135,7 @@ class Room(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.FloatField(max_length=100)
     
     @classmethod
     def getAllservices(cls):
@@ -142,7 +143,7 @@ class Service(models.Model):
     
 
 class Reservation(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client,on_delete=models.CASCADE)
     rooms = models.ManyToManyField(Room)
     services = models.ManyToManyField(Service, blank=True)  # Allow services to be optional
     checkIn = models.DateField()
@@ -165,15 +166,20 @@ class Reservation(models.Model):
     def createReservation(cls, client, rooms, checkIn, checkOut, services=None):
         total_price = 0
         duration = (checkOut - checkIn)
-        for room in rooms:
-            room_price = room.getPrice()
-            total_price += room_price
+       
+        room_price =rooms.price 
+        total_price += room_price
         
-        if services:
-            for service in services:
-                total_price += service.price*duration
+        # if services:
+        #     for service in services:
+        service = get_object_or_404(Service,name=services) 
+        duration_days = duration.days + duration.seconds / (24 * 3600)
 
+        
+        total_price += service.price*duration_days
+        
         reservation = cls.objects.create(client=client, checkIn=checkIn, checkOut=checkOut, duration=duration, totalPrice=total_price, status='pending')
+
         reservation.rooms.add(*rooms)
         if services:
             reservation.services.add(*services)
