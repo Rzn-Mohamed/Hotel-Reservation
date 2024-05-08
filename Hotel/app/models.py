@@ -169,20 +169,20 @@ class Reservation(models.Model):
        
         room_price =rooms.price 
         total_price += room_price
-        
+        clientt = Client.objects.get(user=client)
         # if services:
         #     for service in services:
         service = get_object_or_404(Service,name=services) 
         duration_days = duration.days + duration.seconds / (24 * 3600)
-
+        print(clientt)
         
         total_price += service.price*duration_days
         
-        reservation = cls.objects.create(client=client, checkIn=checkIn, checkOut=checkOut, duration=duration, totalPrice=total_price, status='pending')
+        reservation = cls.objects.create(client=clientt, checkIn=checkIn, checkOut=checkOut, duration=duration, totalPrice=total_price, status='pending')
 
-        reservation.rooms.add(*rooms)
+        reservation.rooms.add(rooms)
         if services:
-            reservation.services.add(*services)
+            reservation.services.add(service)
         return reservation
 
     @classmethod

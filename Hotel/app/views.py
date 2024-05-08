@@ -434,7 +434,8 @@ def client_reservation(request,room_id):
     rooms=Room.getAllRooms()
     services=Service.getAllservices() 
     room = get_object_or_404(Room, id=room_id)
-    
+    user=request.user
+   
     
     
    
@@ -450,7 +451,7 @@ def clientAddreservationForm(request,room_id):
         checkin = datetime.strptime(request.POST['checkin'], '%Y-%m-%d').date()
         checkout = datetime.strptime(request.POST['checkout'], '%Y-%m-%d').date()
         service=request.POST['service']
-        
         print(userr)
+        
         Reservation.createReservation(userr,room,checkin,checkout,service) 
         return redirect('clientroom')
