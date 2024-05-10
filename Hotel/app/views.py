@@ -5,6 +5,9 @@ from .models import Manager , Client , Employee , Reservation ,  Room,Personne,S
 from django.core.paginator import Paginator
 from django.http import HttpResponse , JsonResponse
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.urls import reverse
 # Create your views here.
 
 #-----------------manager----------------#
@@ -287,7 +290,16 @@ def editroom(request, room_id):
 
 def deleteroom(request, room_id):
     room = get_object_or_404(Room, pk=room_id)
+    
+    # Get all reservations related to the room
+    reservations_to_delete = Reservation.objects.filter(rooms=room)
+    
+    # Delete all related reservations
+    reservations_to_delete.delete()
+    
+    # Now delete the room
     room.delete()
+    
     return redirect('manager-room')
 
 
@@ -391,15 +403,18 @@ def reservation_history(request):
 def landing(request):
     return render(request, 'app/client/landingpage.html')
 
+
+# @login_required
 def client_room(request):
-    rooms=Room.getAllRooms()
-    services=Service.getAllservices()
-    service=[]
-    for i in services:
-      service.append(i.name)
-    
-   
-    return render(request, 'app/client/client_room.html',{'rooms':rooms,'services':service})
+    if not request.user.is_authenticated:
+        
+        return redirect(reverse('client-login'))  
+    rooms = Room.getAllRooms()
+    services = Service.getAllservices()
+    service = [i.name for i in services]
+
+    return render(request, 'app/client/client_room.html', {'rooms': rooms, 'services': service})
+
 
 
 def client_settings(request):
@@ -435,11 +450,7 @@ def client_reservation(request,room_id):
     services=Service.getAllservices() 
     room = get_object_or_404(Room, id=room_id)
     user=request.user
-   
-    
-    
-   
-   
+
     return render(request,'app/client/client_addreservation.html',{'rooms':rooms,'services':services,'room':room})
 
 
@@ -451,7 +462,13 @@ def clientAddreservationForm(request,room_id):
         checkin = datetime.strptime(request.POST['checkin'], '%Y-%m-%d').date()
         checkout = datetime.strptime(request.POST['checkout'], '%Y-%m-%d').date()
         service=request.POST['service']
-        print(userr)
+        
         
         Reservation.createReservation(userr,room,checkin,checkout,service) 
         return redirect('clientroom')
+    
+
+
+def logout_view_client(request):
+    logout(request)
+    return redirect('landingpage')  
