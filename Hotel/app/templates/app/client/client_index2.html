@@ -12,12 +12,9 @@
 </head>
 <body>
     <header class="text-gray-700 body-font border-b border-gray-200">
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="https://tailblocks.cc" target="_blank">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-            <span class="ml-3 text-xl">TAILBLOCKS</span>
+        <div class="container mx-auto flex flex-wrap p-2 flex-col md:flex-row items-center">
+            <img src="/images/landing/logo2.png" alt="Room Image" class="w-20 h-34 text-white  " >
+            <span class="ml-2 text-xl">Hotel Mimouna</span>
           </a>
           <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <a class="mr-5 hover:text-gray-900">First Link</a>
@@ -39,7 +36,7 @@
         
       {% endblock %}
                   
-      <footer class="text-gray-700 body-font">
+      {% comment %} <footer class="text-gray-700 body-font">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-wrap md:text-left text-center -mb-10 -mx-4">
             <div class="lg:w-1/6 md:w-1/2 w-full px-4">
@@ -189,8 +186,12 @@
             <span class="sm:ml-auto sm:mt-0 mt-2 sm:w-auto w-full sm:text-left text-center text-gray-500 text-sm">Enamel pin tousled raclette tacos irony</span>
           </div>
         </div>
+      </footer> {% endcomment %}
+      <footer>
+        <div class="bg-gradient-dark border-radius-lg d-flex align-items-center h-100 px-5 py-lg-0 py-5 mx-3">
+          d
+        </div>
       </footer>
-      
       {% block script %}
         
       {% endblock %}

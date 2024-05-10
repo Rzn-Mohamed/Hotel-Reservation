@@ -114,9 +114,9 @@ def manager_dash(request):
             elif room_type == "queen" or room_type == "Queen":
                 queenCount += 1
                 
-    print("King Rooms Count:", kingCount)
-    print("Single Rooms Count:", singleCount)
-    print("queen Rooms Count:", queenCount)
+    # print("King Rooms Count:", kingCount)
+    # print("Single Rooms Count:", singleCount)
+    # print("queen Rooms Count:", queenCount)
 
         
     type=[kingCount,singleCount,queenCount]
