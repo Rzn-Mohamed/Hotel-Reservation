@@ -451,6 +451,7 @@ def client_reservation(request,room_id):
     room = get_object_or_404(Room, id=room_id)
     user=request.user
 
+    
     return render(request,'app/client/client_addreservation.html',{'rooms':rooms,'services':services,'room':room})
 
 
@@ -464,6 +465,7 @@ def clientAddreservationForm(request,room_id):
         service=request.POST['service']
         
         
+        print(service)
         Reservation.createReservation(userr,room,checkin,checkout,service) 
         return redirect('clientroom')
     
