@@ -99,8 +99,6 @@ class Room(models.Model):
     image = models.ImageField(upload_to='room_images/', blank=True, null=True)
     price = models.IntegerField(default=0)
     Evaluation = models.FloatField(default=0)
-    # night_price = models.IntegerField()
-    
     @classmethod
     def createRoom(cls, num, type, description):
         return cls.objects.create(num=num, type=type, description=description)

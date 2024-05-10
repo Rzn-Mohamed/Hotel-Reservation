@@ -22,7 +22,6 @@ urlpatterns = [
   path('managersettings/', views.manager_settings, name='manager-settings'),
   path('managereditsettings/', views.manager_update, name='manager-editsettings'),
   path("delete_confirmation/", views.delete_confirmation, name="delete_confirmation"),
-  
   #----------------client----------------#
   path("clientsignup/", views.client_signup, name="client-signup"),
   path("clientlog/", views.client_login, name="client-login"),
