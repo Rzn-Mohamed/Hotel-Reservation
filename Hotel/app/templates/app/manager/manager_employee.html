@@ -96,48 +96,36 @@
             </div>
             <div class="modal-body">
                 <form class="max-w-md mx-auto" action="{% url 'manager-addemployee' %}" method="POST" enctype="multipart/form-data">
-
-
-
                     {% csrf_token %}
-                  <div class="grid md:grid-cols-2 md:gap-6">
-                    <div class="mb-5">
-                        <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 text-black">fullname</label>
-                        <input type="text" id="fullname" name="fullname" class="bg-gray-300 border border-gray-900 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200  dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="fullname" required />
-                      </div>
-                      <div class="mb-5">
-                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 text-black">address</label>
-                        <input type="text" id="address" name="address" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200  dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="your address" required />
-
-                      </div>
-              
-                  </div>
-                 
-                  <div class="grid md:grid-cols-2 md:gap-6">
-
-                    <div class="mb-5">
-                        <label for="phone_num" class="block mb-2 text-sm font-medium text-gray-900 text-black">phone number</label>
-                        <input type="text" id="phone_num" name="phone_num" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200  dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="your address" required />
-    
-                      </div>
-                  <div class="mb-4">
-                    <label for="imageEmployee" class="block mb-2 text-sm font-medium text-gray-900 text-black">image</label>
-                      <input class="block w-full px-4 py-2 text-sm text-gray-900 placeholder-white-400 border border-gray-100 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400" name="imageEmployee" id="imageEmployee" type="file">
-                  </div>
-
-                  
-                </div>
-
-               
+                    <div class="grid md:grid-cols-2 md:gap-6">
+                        <div class="mb-5">
+                            <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 text-black">fullname</label>
+                            <input type="text" id="fullname" name="fullname" class="bg-gray-300 border border-gray-900 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="fullname" required />
+                        </div>
+                        <div class="mb-5">
+                            <label for="address" class="block mb-2 text-sm font-medium text-gray-900 text-black">address</label>
+                            <input type="text" id="address" name="address" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="your address" required />
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 md:gap-6">
+                        <div class="mb-5">
+                            <label for="phone_num" class="block mb-2 text-sm font-medium text-gray-900 text-black">phone number</label>
+                            <input type="text" id="phone_num" name="phone_num" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="your address" required />
+                        </div>
+                        <div class="mb-4">
+                            <label for="imageEmployee" class="block mb-2 text-sm font-medium text-gray-900 text-black">image</label>
+                            <input class="block w-full px-4 py-2 text-sm text-gray-900 placeholder-white-400 border border-gray-100 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400" name="imageEmployee" id="imageEmployee" type="file">
+                        </div>
+                    </div>
             </div>
             <div class="modal-footer">
-                {% comment %} <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> {% endcomment %}
                 <button type="submit" class="btn btn-primary">Add</button>
             </div>
-        </form>
+            </form>
         </div>
     </div>
 </div>
+
 
 
 

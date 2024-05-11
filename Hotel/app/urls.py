@@ -33,7 +33,7 @@ urlpatterns = [
   path("clientAddreservation/clientAddreservationForm/<int:room_id>",views.clientAddreservationForm,name="clientAddreservationForm"),
   path('clientsettings/', views.client_settings, name='client-settings'),
   path('clienteditsettings/', views.client_update, name='client-editsettings'),
-  path('client_deleteconfirmation/', views.delete_confirmation, name='client-deleteconfirmation'),
+  path('client_deleteconfirmation/', views.client_deleteconfirmation, name='client-deleteconfirmation'),
   path('logout/', views.logout_view_client, name='logout'),
 
 ]

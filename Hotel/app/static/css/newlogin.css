@@ -23,9 +23,10 @@ body{
     position: absolute;
     max-width: 430px;
     width: 100%;
-    padding: 30px;
     border-radius: 6px;
     background: #FFF;
+    margin-top: 60px;
+    padding: 20px;
 }
 .form.signup{
     opacity: 0;

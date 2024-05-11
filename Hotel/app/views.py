@@ -437,7 +437,7 @@ def client_update(request):
         client = Client.objects.get(user=request.user)
         return render(request, 'app/client/client_editsettings.html', {'client': client})
     
-def delete_confirmation(request):
+def client_deleteconfirmation(request):
     if request.method == 'POST':
         user = request.user
         user.delete()

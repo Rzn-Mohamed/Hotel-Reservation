@@ -3,11 +3,11 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}
 {% block content %}
-<div class="grid grid-cols-4 gap-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 ml-3">
 {% for r in rooms%}
-<div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl mt-20 ml-20 ">
-    <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-xl shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
-        <img src="{{ r.image.url }}" alt="Room Image" >
+<div class="relative flex w-full sm:w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl mt-4 sm:mt-8 ml-4 sm:ml-0 mt-3">
+    <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-t-xl bg-blue-gray-500 bg-clip-border text-white shadow-xl shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
+        <img src="{{ r.image.url }}" alt="Room Image" class="object-cover w-full h-full">
     </div>
     <div class="p-6">
       
@@ -16,20 +16,20 @@
         <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
           {{r.type}}
         </h5>
-        <div class="px-6  ml-16">
+        <div class="px-6 sm:ml-16">
         <button
         href="/"
         class=" px-1 rounded-md drop-shadow-xl bg-[#7289da] from-gray-800 to-black text-white"
       > {{r.Evaluation}}</button>
         </div>
       </div>
-      
-     <div class="grid grid-cols-2 gap-4">
+
+     {% comment %} <div class="grid grid-cols-2 gap-4"> {% endcomment %}
       <p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
         {{r.description}}
         </p>
-        <p class="ml-6 block font-bold text-base text-blue-700  ">MAD {{r.price}}</p>
-     </div>
+        {% comment %} <p class="ml-6 block font-bold text-base text-blue-700  ">MAD {{r.price}}</p> {% endcomment %}
+     {% comment %} </div> {% endcomment %}
 
      
      
@@ -47,7 +47,11 @@
             Book
         </button>
       </a>
+      <div class="flex justify-end	">
+        <p class="ml-6 block font-bold text-base text-blue-700  ">MAD {{r.price}}</p>
+      </div>
     </div>
+    
     
   
   </div>

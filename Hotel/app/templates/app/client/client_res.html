@@ -8,10 +8,13 @@
 {% endblock %}
 
 {% block content %}
-<br><br><br><br>
-<div class="overflow-x-auto">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+<div style="text-align: center;">
+    <h2 class="pl-6 text-2xl font-bold sm:text-3xl m-10">My Reservations</h2>
+  </div>
+  <br>
+<div class="overflow-x-auto mx-11">
+    <table class="w-full text-sm text-left text-black dark:text-gray-400 ">
+        <thead class="text-xl text-black uppercase bg-sky-100 dark:bg-sky-100 dark:text-gray-400">
             <tr>
                 
                 <th scope="col" class="px-4 py-3">Room Number</th>
@@ -26,7 +29,7 @@
         </thead>
         <tbody>
             {% for reservation in reservations %}
-            <tr class="border-b dark:border-gray-700">
+            <tr class="border-b dark:border-gray-700 ">
                 
                 <td class="px-4 py-3">
                 {% for room in reservation.rooms.all %}
